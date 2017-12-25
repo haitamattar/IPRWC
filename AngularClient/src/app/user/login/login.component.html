@@ -1,3 +1,22 @@
-<p>
-  login works!
-</p>
+<div class="floatingbox right col-md-4">
+    <section class="floatingbox-content">
+        <header class="logo"></header>
+        <section class="login">
+            <div id="loginForm">
+                <h1>Aanmelden</h1>
+                <p class="subtitle">Exclusief toegang voor personeel</p>
+                <form #loginForm="ngForm" (ngSubmit)="login()">
+                    <div class="formGroup">
+                        <label for="username">Gebruikersnaam</label>
+                        <input type="text" class="form-control" id="username" required [(ngModel)]="user.email" name="Gebruikernaam" placeholder="Voer gebruikersnaam in">
+                    </div>
+                    <div class="formGroup">
+                        <label for="password">Wachtwoord</label>
+                        <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="Wachtwoord" placeholder="Voer wachtwoord in">
+                    </div>
+                    <button type="submit" class="btn btn-success">Aanmelden</button>
+                </form>
+            </div>
+        </section>
+    </section>
+</div>

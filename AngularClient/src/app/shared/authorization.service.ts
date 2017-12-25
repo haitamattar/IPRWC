@@ -21,6 +21,10 @@ export class AuthorizationService {
         return this.login !== null && this.password !== null;
     }
 
+    public hasRole(role): boolean {
+        return this.authenticator.role === role;
+    }
+
     public setAuthorization(login: string, password: string): void {
         this.login = login;
         this.password = password;

@@ -15,49 +15,25 @@ export class UserService {
         return this.api.get<User[]>('users');
     }
 
-    public register(user: User): void  {
-        const registerData = {
-            email: user.email,
-            password: user.password,
-            fullname: user.fullname,
-            postalcode: user.postalcode,
-            streetnumber: user.streetnumber
-        };
-
-        this.api.post<void>('users', registerData).subscribe
-        (
-            data => {
-                this.goHome();
-            },
-            error => {
-                alert('Het registreren is mislukt');
-            }
-        );
+    public create(user: User): Observable<User> {
+        return this.api.post<User>('users/add', user);
     }
 
-    public login(user: User, remember: boolean): void {
+    public login(user: User) {
         this.authService.setAuthorization(user.email, user.password);
-
-        this.api.get<User>('users/me').subscribe
-        (
-            authenticator => {
-                this.authService.storeAuthorization(authenticator, remember);
-
-                this.goHome();
-            },
-            error => {
-                alert('Het inloggen is mislukt');
-            }
-        );
+        return this.api.get<User>('users/me');
     }
 
     public logout() {
         this.authService.deleteAuthorization();
-
         this.goHome();
     }
 
   private goHome() {
     this.router.navigate(['home']);
   }
+
+  storeAuth(authenticator, remember) {
+        this.authService.storeAuthorization(authenticator, remember);
+    }
 }

@@ -14,12 +14,12 @@ export class ApiService {
 
     if (typeof queryParameters === 'object') {
       for (const key in queryParameters ) {
-          if (queryParameters.hasOwnProperty(key)) {
+          // if (queryParameters.hasOwnProperty(key)) {
             const value = queryParameters[key];
             const prefix = queryString.length === 0 ? '?' : '&';
 
             queryString += `${prefix}${key}=${value}`;
-          }
+          // }
       }
     }
     return queryString;

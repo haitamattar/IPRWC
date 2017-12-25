@@ -1,3 +1,13 @@
-<p>
-  header works!
-</p>
+<nav>
+  <div class="header">
+    <div class="logo"> WEBSHOP </div>
+    <ul class="menu" [ngSwitch]="authenticatorRole">
+      <li><a routerLink="/login" (click)="toggleMenu()">Login</a></li>
+      <li><a routerLink="/products" (click)="toggleMenu()">Products</a></li>
+      <li><a routerLink="/admin" (click)="toggleMenu()">admin</a></li>
+      <!-- <li *ngSwitchCase="'FRANCHISER'"><a routerLink="/user" (click)="toggleMenu()">Gebruikers</a></li> -->
+      <!-- <li><a routerLink="/wistjedat" (click)="toggleMenu()">Wist je dat</a></li> -->
+      <li><a routerLink="/" (click)="toggleMenu(); logout()">Uitloggen</a></li>
+    </ul>
+  </div>
+</nav>

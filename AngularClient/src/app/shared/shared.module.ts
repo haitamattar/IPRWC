@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {PublicModule} from '../public.module';
+import { AuthorizationService } from './authorization.service';
+import { ApiService } from './api.service';
+
 import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    PublicModule
   ],
-  declarations: [HeaderComponent]
+  declarations: [HeaderComponent],
+  exports: [ HeaderComponent ],
+  providers: [ ApiService, AuthorizationService]
 })
 export class SharedModule { }
