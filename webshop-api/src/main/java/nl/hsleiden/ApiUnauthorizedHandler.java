@@ -4,10 +4,6 @@ import io.dropwizard.auth.UnauthorizedHandler;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- *
- * @author Peter van Vliet
- */
 public class ApiUnauthorizedHandler implements UnauthorizedHandler
 {
     @Override

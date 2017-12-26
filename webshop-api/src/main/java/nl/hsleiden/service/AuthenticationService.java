@@ -17,10 +17,7 @@ import javax.inject.Singleton;
 import nl.hsleiden.model.User;
 import nl.hsleiden.persistence.UserDAO;
 
-/**
- *
- * @author Peter van Vliet
- */
+
 @Singleton
 public class AuthenticationService implements Authenticator<BasicCredentials, User>, Authorizer<User>
 {

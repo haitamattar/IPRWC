@@ -10,10 +10,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * 
- * @author Peter van Vliet
- */
 public class ClientFilter implements Filter
 {
     private static final String[] allowedExtensions =

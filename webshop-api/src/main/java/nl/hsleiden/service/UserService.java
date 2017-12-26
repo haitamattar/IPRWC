@@ -9,10 +9,6 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
 
-/**
- *
- * @author Peter van Vliet
- */
 @Singleton
 public class UserService extends BaseService<User>
 {

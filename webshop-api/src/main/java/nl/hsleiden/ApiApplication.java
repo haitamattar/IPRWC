@@ -22,10 +22,6 @@ import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author Peter van Vliet
- */
 public class ApiApplication extends Application<ApiConfiguration>
 {
     private final Logger logger = LoggerFactory.getLogger(ApiApplication.class);

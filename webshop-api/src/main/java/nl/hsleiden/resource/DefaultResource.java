@@ -13,10 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author Peter van Vliet
- */
+
 @Singleton
 @Path("/")
 public class DefaultResource

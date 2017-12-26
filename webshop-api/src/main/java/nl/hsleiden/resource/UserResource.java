@@ -13,22 +13,17 @@ import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 import java.util.Collection;
 
-/**
- * Meer informatie over resources:
- *  https://jersey.java.net/documentation/latest/user-guide.html#jaxrs-resources
- * 
- * @author Peter van Vliet
- */
+
 @Singleton
-@Path("/gebruikers")
+@Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
-public class GebruikerResource
+public class UserResource
 {
     private UserService service;
 
 
     @Inject
-    public GebruikerResource(UserService service)
+    public UserResource(UserService service)
 {
     this.service = service;
 }

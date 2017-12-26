@@ -13,7 +13,6 @@ import java.security.Principal;
 public class User implements Principal {
 
     @NotEmpty
-    @Email
     @JsonView(View.Public.class)
     private long id = 0;
 
