@@ -6,11 +6,9 @@ import nl.hsleiden.View;
 import nl.hsleiden.model.Product;
 import nl.hsleiden.service.ProductService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -38,6 +36,16 @@ public class ProductResource {
     @JsonView(View.Public.class)
     public Product retrieve(@PathParam("id") long id) throws SQLException {
         return service.getById(id);
+    }
+
+    @POST
+    @RolesAllowed({"ADMIN"})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @JsonView(View.Public.class)
+    public Product createUserAdmin(Product product)
+    {
+        product = service.insertProduct(product);
+        return product;
     }
 
 }

@@ -20,6 +20,7 @@ public class ProductService {
         this.productDAO = dao;
     }
 
+    // List all products
     public Collection<Product> getAll() throws SQLException {
         try {
             List<Product> productList = productDAO.all();
@@ -30,8 +31,18 @@ public class ProductService {
         return null;
     }
 
-
+    // Get product by id
     public Product getById(long id)throws SQLException {
         return productDAO.findById(id);
+    }
+
+    // Insert new product
+    public Product insertProduct(Product product){
+        try {
+            return productDAO.insert(product);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -52,7 +52,7 @@ public class AuthenticationService implements Authenticator<BasicCredentials, Us
     @Override
     public boolean authorize(User user, String roleName)
     {
-        return true;
+        return user.getRole().equals(roleName);
     }
 
 }

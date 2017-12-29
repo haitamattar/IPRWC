@@ -11,12 +11,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
-    String GET_ALL_USERS = "SELECT * FROM user";
 
-    String FIND_BY_ID = "SELECT * FROM `user` WHERE `id` = ?";
+    String GET_ALL_USERS = "SELECT * FROM user;";
 
-    String FIND_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?";
+    String FIND_BY_ID = "SELECT * FROM `user` WHERE `id` = ?;";
 
+    String FIND_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?;";
+
+    String INSERT_USER = "INSERT INTO `user` (`email`, `password`, `fullname`, `postalcode`, `streetnumber`, `role`) " +
+                         "VALUES (?, ?, ?, ?, ?, ?);";
+
+
+    // insert user
+    public User insert(User user) throws SQLException {
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()){
+
+            // Insert user
+            PreparedStatement insert_user_ps = connection.prepareStatement(INSERT_USER, PreparedStatement.RETURN_GENERATED_KEYS);
+            insert_user_ps.setString(1, user.getEmail());
+            insert_user_ps.setString(2, user.getPassword());
+            insert_user_ps.setString(3, user.getFullName());
+            insert_user_ps.setString(4, user.getPostalcode());
+            insert_user_ps.setString(5, user.getStreetnumber());
+            insert_user_ps.setString(6, user.getRole());
+
+            insert_user_ps.execute();
+
+            // Get created user id
+            ResultSet user_rs = insert_user_ps.getGeneratedKeys();
+            if (!user_rs.next()) {
+                throw new SQLException("No key returned for user");
+            }
+            user.setId(user_rs.getLong(1));
+
+            // Close client streams
+            user_rs.close();
+            insert_user_ps.close();
+
+            connection.close();
+            return user;
+        }
+    }
 
     // Get all users
     public List<User> all() throws SQLException {
@@ -28,7 +63,7 @@ public class UserDAO {
 
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                users.add(createGebruiker(rset));
+                users.add(createUser(rset));
             }
 
             pstmt.close();
@@ -49,7 +84,7 @@ public class UserDAO {
             ResultSet rset = pstmt.executeQuery();
 
             while(rset.next()){
-                user = createGebruiker(rset);
+                user = createUser(rset);
             }
 
             pstmt.close();
@@ -69,7 +104,7 @@ public class UserDAO {
             ResultSet rset = pstmt.executeQuery();
 
             while(rset.next()) {
-                user = createGebruiker(rset);
+                user = createUser(rset);
             }
 
             pstmt.close();
@@ -81,7 +116,7 @@ public class UserDAO {
 
 
     // create gebruiker
-    private User createGebruiker(ResultSet rset) throws SQLException {
+    private User createUser(ResultSet rset) throws SQLException {
         User user = new User(
                 rset.getLong("id"),
                 rset.getString("email"),

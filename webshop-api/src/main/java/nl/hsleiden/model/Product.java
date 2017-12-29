@@ -34,6 +34,10 @@ public class Product {
     @JsonView(View.Public.class)
     private double price;
 
+    public Product() {
+
+    }
+
     public Product(long id, String name, String description, Category category, double price) {
         this.id = id;
         this.name = name;

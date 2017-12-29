@@ -16,6 +16,10 @@ public class Category {
     @JsonView(View.Public.class)
     private String name;
 
+    public Category() {
+
+    }
+
     public Category(long id, String name) {
         this.id = id;
         this.name = name;

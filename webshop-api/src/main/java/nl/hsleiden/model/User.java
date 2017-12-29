@@ -34,7 +34,7 @@ public class User implements Principal {
     @NotEmpty
     @Length(min = 6, max = 7)
     @JsonView(View.Public.class)
-    private String postcode;
+    private String postalcode;
 
     @NotEmpty
     @Length(min = 1, max = 10)
@@ -44,27 +44,36 @@ public class User implements Principal {
     @JsonView(View.Public.class)
     private String role;
 
+    public User(){
 
-    public User(String email, String fullName, String postcode, String streetnumber, String role) {
+    }
+
+
+    public User(Long id, String email, String fullName, String postalcode, String streetnumber, String role) {
+        this.id = id;
         this.email = email;
         this.fullName = fullName;
-        this.postcode = postcode;
+        this.postalcode = postalcode;
         this.streetnumber = streetnumber;
         this.role = role;
     }
 
-    public User(long id, String email, String password, String fullName, String postcode, String streetnumber, String role) {
+    public User(long id, String email, String password, String fullName, String postalcode, String streetnumber, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
-        this.postcode = postcode;
+        this.postalcode = postalcode;
         this.streetnumber = streetnumber;
         this.role = role;
     }
 
     public long getId(){
         return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getEmail() {
@@ -91,12 +100,12 @@ public class User implements Principal {
         this.fullName = fullName;
     }
 
-    public String getPostcode() {
-        return postcode;
+    public String getPostalcode() {
+        return postalcode;
     }
 
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
+    public void setPostalcode(String postalcode) {
+        this.postalcode = postalcode;
     }
 
     public String getStreetnumber() {

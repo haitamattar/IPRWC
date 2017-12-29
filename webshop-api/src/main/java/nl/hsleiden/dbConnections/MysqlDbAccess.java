@@ -1,5 +1,7 @@
 package nl.hsleiden.dbConnections;
 
+import nl.hsleiden.persistence.OrderDAO;
+import nl.hsleiden.persistence.ProductDAO;
 import nl.hsleiden.persistence.UserDAO;
 
 import java.io.File;
@@ -52,8 +54,16 @@ public class MysqlDbAccess {
     }
 
 
-    public UserDAO getGebruikerDao() {
+    public UserDAO getUserDao() {
         return new UserDAO();
+    }
+
+    public ProductDAO getProductDao() {
+        return new ProductDAO();
+    }
+
+    public OrderDAO getOrderDao() {
+        return new OrderDAO();
     }
 
 }
