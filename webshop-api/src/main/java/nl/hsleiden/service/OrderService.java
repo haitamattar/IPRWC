@@ -41,4 +41,14 @@ public class OrderService {
         }
         return null;
     }
+
+    // Get order by id and user auth
+    public Order getOrderByIdAndUserAuth(long id, User user)throws SQLException {
+        return orderDAO.findOrderById(id, user);
+    }
+
+    // Get order by id (only for admins)
+    public Order getOrderById(long id)throws SQLException {
+        return orderDAO.findOrderById(id);
+    }
 }

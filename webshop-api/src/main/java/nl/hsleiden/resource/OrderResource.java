@@ -11,10 +11,7 @@ import nl.hsleiden.service.OrderService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -32,6 +29,7 @@ public class OrderResource {
         this.service = service;
     }
 
+    // Get all orders of all users (only for admin)
     @GET
     @RolesAllowed({"ADMIN"})
     @JsonView(View.Public.class)
@@ -40,11 +38,30 @@ public class OrderResource {
     }
 
     @GET
-    @Path("/userOrder")
+    @Path("/userOrders")
     @RolesAllowed({"CUSTOMER"})
     @JsonView(View.Public.class)
-    public Collection<Order> retrieveAllWithUserId(@Auth User user) throws SQLException {
+    public Collection<Order> retrieveAllordersWithUserId(@Auth User user) throws SQLException {
         return service.getAllWithUserId(user);
     }
+
+    @GET
+    @Path("/{id}")
+    @RolesAllowed({"CUSTOMER"})
+    @JsonView(View.Public.class)
+    public Order retrieveOrderWithIdAndCurrentUser(@PathParam("id") Long id, @Auth User user) throws SQLException {
+        return service.getOrderByIdAndUserAuth(id, user);
+    }
+
+    @GET
+    @Path("/userOrder/{id}")
+    @RolesAllowed({"ADMIN"})
+    @JsonView(View.Public.class)
+    public Order retrieveOrderWithId(@PathParam("id") Long id) throws SQLException {
+        return service.getOrderById(id);
+    }
+
+
+
 
 }

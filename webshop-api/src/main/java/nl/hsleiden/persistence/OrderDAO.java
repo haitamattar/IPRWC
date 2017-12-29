@@ -25,6 +25,16 @@ public class OrderDAO {
                             "FROM `order` " +
                             "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id`;";
 
+    String GET_ORDER_WITH_ID_AND_USERID = "SELECT * " +
+                                          "FROM `order` " +
+                                          "WHERE `id` = ? AND `user_id` = ?;";
+
+    String GET_ORDER_WITH_ID = "SELECT `order`.*,  `user`.`email`, `user`.`fullname`, `user`.`postalcode`," +
+                               "  `user`.`streetnumber`, `user`.`role` " +
+                               "FROM `order` " +
+                               "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id` " +
+                               "WHERE `order`.`id` = ?;";
+
     String GET_ALL_ORDERS_WITH_USERID = "SELECT * " +
                                         "FROM `order` " +
                                         "WHERE `user_id` = ?;";
@@ -81,7 +91,7 @@ public class OrderDAO {
 
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                Order order = createOrderWithUser(rset);
+                Order order = createOrder(rset);
                 // Get all order details from order
                 order.setOrdersDetail(allOrderDetails(order.getId()));
                 orders.add(order);
@@ -94,7 +104,7 @@ public class OrderDAO {
         }
     }
 
-    // Get all orders with user id
+    // Get all orders with current user auth
     public List<Order> allOrdersWithUserId(User user) throws SQLException {
         System.out.println("LIST DATA");
         ArrayList<Order> orders = new ArrayList<Order>();
@@ -105,7 +115,7 @@ public class OrderDAO {
 
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                Order order = createOrder(rset, user);
+                Order order = createOrderWithUser(rset, user);
                 // Get all order details from order
                 order.setOrdersDetail(allOrderDetails(order.getId()));
                 orders.add(order);
@@ -138,14 +148,56 @@ public class OrderDAO {
         }
     }
 
+    // Get product by id and current user auth
+    public Order findOrderById(long id, User user) throws SQLException {
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(GET_ORDER_WITH_ID_AND_USERID);
+            pstmt.setLong(1, id);
+            pstmt.setLong(2, user.getId());
+            Order order = null;
+            ResultSet rset = pstmt.executeQuery();
 
+            while(rset.next()){
+                order = createOrderWithUser(rset, user);
+                // Get all order details from order
+                order.setOrdersDetail(allOrderDetails(order.getId()));
+            }
+
+            pstmt.close();
+            connection.close();
+
+            return order;
+        }
+    }
+
+    // Get order by id
+    public Order findOrderById(long id) throws SQLException {
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(GET_ORDER_WITH_ID);
+            pstmt.setLong(1, id);
+
+            Order order = null;
+            ResultSet rset = pstmt.executeQuery();
+
+            while(rset.next()){
+                order = createOrder(rset);
+                // Get all order details from order
+                order.setOrdersDetail(allOrderDetails(order.getId()));
+            }
+
+            pstmt.close();
+            connection.close();
+
+            return order;
+        }
+    }
 
 
 
     // Create functions
 
     // Create Order
-    private Order createOrderWithUser(ResultSet rset) throws SQLException {
+    private Order createOrder(ResultSet rset) throws SQLException {
 
         User user = new User(
                 rset.getLong("user_id"),
@@ -165,7 +217,7 @@ public class OrderDAO {
     }
 
     // Create Order
-    private Order createOrder(ResultSet rset, User user) throws SQLException {
+    private Order createOrderWithUser(ResultSet rset, User user) throws SQLException {
 
 
 
