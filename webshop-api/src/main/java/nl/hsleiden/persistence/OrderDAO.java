@@ -25,6 +25,10 @@ public class OrderDAO {
                             "FROM `order` " +
                             "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id`;";
 
+    String GET_ALL_ORDERS_WITH_USERID = "SELECT * " +
+                                        "FROM `order` " +
+                                        "WHERE `user_id` = ?;";
+
     String INSERT_ORDER = "INSERT INTO `order` (`user_id`) " +
                           "VALUES (?);";
 
@@ -77,7 +81,31 @@ public class OrderDAO {
 
             ResultSet rset = pstmt.executeQuery();
             while (rset.next()) {
-                Order order = createOrder(rset);
+                Order order = createOrderWithUser(rset);
+                // Get all order details from order
+                order.setOrdersDetail(allOrderDetails(order.getId()));
+                orders.add(order);
+            }
+
+            pstmt.close();
+            connection.close();
+
+            return orders;
+        }
+    }
+
+    // Get all orders with user id
+    public List<Order> allOrdersWithUserId(User user) throws SQLException {
+        System.out.println("LIST DATA");
+        ArrayList<Order> orders = new ArrayList<Order>();
+
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(GET_ALL_ORDERS_WITH_USERID);
+            pstmt.setLong(1, user.getId());
+
+            ResultSet rset = pstmt.executeQuery();
+            while (rset.next()) {
+                Order order = createOrder(rset, user);
                 // Get all order details from order
                 order.setOrdersDetail(allOrderDetails(order.getId()));
                 orders.add(order);
@@ -110,12 +138,16 @@ public class OrderDAO {
         }
     }
 
-    // create Order
-    private Order createOrder(ResultSet rset) throws SQLException {
-//            public User(String email, String fullName, String postcode, String streetnumber, String role) {
 
 
-            User user = new User(
+
+
+    // Create functions
+
+    // Create Order
+    private Order createOrderWithUser(ResultSet rset) throws SQLException {
+
+        User user = new User(
                 rset.getLong("user_id"),
                 rset.getString("email"),
                 rset.getString("fullname"),
@@ -132,11 +164,22 @@ public class OrderDAO {
         return order;
     }
 
-    // create OrderDetail
+    // Create Order
+    private Order createOrder(ResultSet rset, User user) throws SQLException {
+
+
+
+        Order order = new Order(
+                rset.getLong("id"),
+                rset.getTimestamp("order_date_time"),
+                user,
+                null);
+
+        return order;
+    }
+
+    // Create OrderDetail
     private OrderDetail createOrderDetail(ResultSet rset) throws SQLException {
-
-//            public Product(long id, String name, String description, Category category, double price) {
-
 
             Product product = new Product(
                 rset.getLong("product_id"),
