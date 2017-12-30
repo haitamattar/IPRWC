@@ -76,4 +76,11 @@ public class UserResource
         return user;
     }
 
+    @DELETE
+    @RolesAllowed({"ADMIN"})
+    @JsonView(View.Public.class)
+    public boolean deleteUser(User user) throws SQLException {
+        return service.deleteUser(user);
+    }
+
 }

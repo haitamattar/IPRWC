@@ -13,18 +13,28 @@ import java.util.List;
 
 public class ProductDAO {
 
-    String GET_ALL_PRODUCTS = "SELECT product.*, productCategory.id as 'cat_id', productCategory.name as 'cat_name' " +
-                              "FROM product " +
-                              "LEFT JOIN productCategory on product.product_category_id = productCategory.id";
+    final String GET_ALL_PRODUCTS = "SELECT `product`.*, `productCategory`.`id` as 'cat_id', " +
+                                    " `productCategory`.`name` as 'cat_name' " +
+                                    "FROM `product` " +
+                                    "LEFT JOIN `productCategory` " +
+                                    " ON `product`.`product_category_id` = `productCategory`.`id` " +
+                                    "WHERE `product`.`product_status` = 'ACTIVE';";
 
-    String GET_PRODUCT_BY_ID = "SELECT product.*, productCategory.id AS 'cat_id', productCategory.name AS 'cat_name' " +
-                               "FROM product " +
-                               "LEFT JOIN productCategory " +
-                               "ON product.product_category_id = productCategory.id " +
-                               "WHERE product.id = ?";
+    final String GET_PRODUCT_BY_ID = "SELECT `product`.*, `productCategory`.`id` AS 'cat_id', " +
+                                     " `productCategory`.`name` AS 'cat_name' " +
+                                     "FROM `product` " +
+                                     "LEFT JOIN `productCategory` " +
+                                     "ON `product`.`product_category_id` = `productCategory`.`id` " +
+                                     "WHERE `product`.`id` = ? AND `product`.`product_status` = 'ACTIVE'";
 
-    String INSERT_PRODUCT = "INSERT INTO `product` (`product_name`, `product_description`, `product_category_id`, `product_price`)" +
-                            " VALUES (?, ?, ?, ?);";
+    final String INSERT_PRODUCT = "INSERT INTO `product` (`product_name`, `product_description`," +
+                                  " `product_category_id`, `product_price`)" +
+                                  " VALUES (?, ?, ?, ?);";
+
+    // Soft delete in db
+    final String DELETE_PRODUCT = "UPDATE `product` " +
+                                  "SET `product_status` = 'DELETED' " +
+                                  "WHERE `id` = ?;";
 
     // insert product
     public Product insert(Product product) throws SQLException {
@@ -92,6 +102,21 @@ public class ProductDAO {
             connection.close();
 
             return product;
+        }
+    }
+
+
+    // Delete product
+    public int delete(Product product) throws SQLException {
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
+            PreparedStatement delete_pr = connection.prepareStatement(DELETE_PRODUCT);
+            delete_pr.setLong(1, product.getId());
+
+            int rowsAffected = delete_pr.executeUpdate();
+
+            delete_pr.close();
+            connection.close();
+            return rowsAffected;
         }
     }
 

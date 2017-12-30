@@ -19,8 +19,18 @@ public class OrderService {
         this.orderDAO = dao;
     }
 
+    // Insert order
+    public Order insert(Order order){
+        try{
+            return orderDAO.insert(order);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-    // List all products
+
+    // List all orders
     public Collection<Order> getAll() throws SQLException {
         try {
             List<Order> orderList = orderDAO.allOrders();
@@ -31,7 +41,7 @@ public class OrderService {
         return null;
     }
 
-    // List all products
+    // List all orders with userID
     public Collection<Order> getAllWithUserId(User user) throws SQLException {
         try {
             List<Order> orderList = orderDAO.allOrdersWithUserId(user);

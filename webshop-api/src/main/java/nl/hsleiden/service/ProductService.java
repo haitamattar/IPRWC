@@ -36,6 +36,11 @@ public class ProductService {
         return productDAO.findById(id);
     }
 
+    // Get product by id
+    public int delete(Product product)throws SQLException {
+        return productDAO.delete(product);
+    }
+
     // Insert new product
     public Product insertProduct(Product product){
         try {

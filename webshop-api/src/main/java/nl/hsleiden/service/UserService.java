@@ -43,6 +43,10 @@ public class UserService extends BaseService<User>
         return null;
     }
 
+    public boolean deleteUser(User user) throws SQLException {
+        return userDAO.deleteUser(user);
+    }
+
 
 
 }

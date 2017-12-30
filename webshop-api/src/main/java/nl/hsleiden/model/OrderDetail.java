@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonView;
 import nl.hsleiden.View;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import java.util.Date;
-
 public class OrderDetail {
 
     @NotEmpty

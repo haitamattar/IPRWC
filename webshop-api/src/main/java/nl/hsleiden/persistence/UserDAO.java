@@ -12,14 +12,19 @@ import java.util.List;
 
 public class UserDAO {
 
-    String GET_ALL_USERS = "SELECT * FROM user;";
+    final String GET_ALL_USERS = "SELECT * FROM user;";
 
-    String FIND_BY_ID = "SELECT * FROM `user` WHERE `id` = ?;";
+    final String FIND_BY_ID = "SELECT * FROM `user` WHERE `id` = ?;";
 
-    String FIND_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?;";
+    final String FIND_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?;";
 
-    String INSERT_USER = "INSERT INTO `user` (`email`, `password`, `fullname`, `postalcode`, `streetnumber`, `role`) " +
-                         "VALUES (?, ?, ?, ?, ?, ?);";
+    final String INSERT_USER = "INSERT INTO `user` (`email`, `password`, `fullname`, " +
+                               " `postalcode`, `streetnumber`, `role`) " +
+                               "VALUES (?, ?, ?, ?, ?, ?);";
+
+    final String DELETE_USER = "DELETE " +
+                               "FROM `user` " +
+                               "WHERE `id` = ?;";
 
 
     // insert user
@@ -74,7 +79,7 @@ public class UserDAO {
     }
 
 
-    // Get gebruiker by id
+    // Get user by id
     public User findById(long id) throws SQLException {
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
             PreparedStatement pstmt = connection.prepareStatement(FIND_BY_ID);
@@ -95,7 +100,7 @@ public class UserDAO {
     }
 
 
-    // Get gebruiker by email
+    // Get user by email
     public User findByEmail(String email) throws SQLException {
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
             PreparedStatement pstmt = connection.prepareStatement(FIND_BY_EMAIL);
@@ -114,8 +119,22 @@ public class UserDAO {
         }
     }
 
+    // Delete user
+    public boolean deleteUser(User user) throws SQLException{
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
+            PreparedStatement pstmt = connection.prepareStatement(DELETE_USER);
+            pstmt.setLong(1, user.getId());
 
-    // create gebruiker
+            int rowsAffected = pstmt.executeUpdate();
+
+            pstmt.close();
+            connection.close();
+            return rowsAffected > 0;
+        }
+    }
+
+
+    // create user
     private User createUser(ResultSet rset) throws SQLException {
         User user = new User(
                 rset.getLong("id"),

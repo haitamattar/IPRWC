@@ -61,6 +61,14 @@ public class OrderResource {
         return service.getOrderById(id);
     }
 
+    @POST
+    @RolesAllowed({"ADMIN", "FRANCHISER"})
+    @JsonView(View.Public.class)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Order insert(Order order){
+        return service.insert(order);
+    }
+
 
 
 

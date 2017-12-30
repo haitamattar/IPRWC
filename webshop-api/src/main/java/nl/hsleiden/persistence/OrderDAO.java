@@ -20,61 +20,81 @@ public class OrderDAO {
                                   "LEFT JOIN `orderDetail` ON `order`.`id` = `orderDetail`.`order_id` " +
                                   "WHERE `order`.`user_id` = ? ;";
 
-    String GET_ALL_ORDERS = "SELECT `order`.*,  `user`.`email`, `user`.`fullname`, `user`.`postalcode`," +
-                            "  `user`.`streetnumber`, `user`.`role` " +
-                            "FROM `order` " +
-                            "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id`;";
+    final String GET_ALL_ORDERS = "SELECT `order`.*, `user`.`email`, `user`.`fullname`, `user`.`postalcode`," +
+                                  "  `user`.`streetnumber`, `user`.`role` " +
+                                  "FROM `order` " +
+                                  "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id`;";
 
-    String GET_ORDER_WITH_ID_AND_USERID = "SELECT * " +
-                                          "FROM `order` " +
-                                          "WHERE `id` = ? AND `user_id` = ?;";
+    final String GET_ORDER_WITH_ID_AND_USERID = "SELECT * " +
+                                                "FROM `order` " +
+                                                "WHERE `id` = ? AND `user_id` = ?;";
 
-    String GET_ORDER_WITH_ID = "SELECT `order`.*,  `user`.`email`, `user`.`fullname`, `user`.`postalcode`," +
-                               "  `user`.`streetnumber`, `user`.`role` " +
-                               "FROM `order` " +
-                               "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id` " +
-                               "WHERE `order`.`id` = ?;";
+    final String GET_ORDER_WITH_ID = "SELECT `order`.*,  `user`.`email`, `user`.`fullname`, `user`.`postalcode`," +
+                                     "  `user`.`streetnumber`, `user`.`role` " +
+                                     "FROM `order` " +
+                                     "LEFT JOIN `user` ON `order`.`user_id` = `user`.`id` " +
+                                     "WHERE `order`.`id` = ?;";
 
-    String GET_ALL_ORDERS_WITH_USERID = "SELECT * " +
-                                        "FROM `order` " +
-                                        "WHERE `user_id` = ?;";
+    final String GET_ALL_ORDERS_WITH_USERID = "SELECT * " +
+                                              "FROM `order` " +
+                                              "WHERE `user_id` = ?;";
 
-    String INSERT_ORDER = "INSERT INTO `order` (`user_id`) " +
-                          "VALUES (?);";
+    final String INSERT_ORDER = "INSERT INTO `order` (`user_id`) " +
+                                "VALUES (?);";
 
 
     // Order details
-
-    String GET_ALL_ORDERDETAILS_WITH_ORDERID = "SELECT `orderDetail`.*, `product`.`product_name`, `product`.`product_description`, " +
-                                               " `product`.`product_price` AS 'current_productprice', `product`.`product_category_id`, " +
-                                               " `productCategory`.`name` AS 'category_name' " +
-                                               "FROM `orderDetail` " +
-                                               "LEFT JOIN `product` ON `product_id` = `product`.`id` " +
-                                               "LEFT JOIN `productCategory` ON `product_category_id` = `productCategory`.`id` " +
-                                               "WHERE `order_id` = ? ;";
+    final String INSERT_ORDER_DETAIL = "INSERT INTO `orderDetail` (`product_id`, `product_price`, `order_id`) " +
+                                       "VALUES (?, ?, ?);";
 
 
-    // insert product
+    final String GET_ALL_ORDERDETAILS_WITH_ORDERID = "SELECT `orderDetail`.*, `product`.`product_name`," +
+                                                     " `product`.`product_description`, " +
+                                                     " `product`.`product_price` AS 'current_productprice'," +
+                                                     " `product`.`product_category_id`, " +
+                                                     " `productCategory`.`name` AS 'category_name' " +
+                                                     "FROM `orderDetail` " +
+                                                     "LEFT JOIN `product` ON `product_id` = `product`.`id` " +
+                                                     "LEFT JOIN `productCategory` " +
+                                                     " ON `product_category_id` = `productCategory`.`id` " +
+                                                     "WHERE `order_id` = ? ;";
+
+
+    // insert order with orderDetails
     public Order insert(Order order) throws SQLException {
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()){
+            connection.setAutoCommit(false);
+            // Insert order id
+            PreparedStatement insert_order_ps = connection.prepareStatement(INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS);
+            insert_order_ps.setDouble(1, order.getUser().getId());
+            insert_order_ps.execute();
 
-            // Insert user
-            PreparedStatement insert_product_ps = connection.prepareStatement(INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert_product_ps.setDouble(1, order.getUser().getId());
-
-
-            insert_product_ps.execute();
-
-            // Get created user id
-            ResultSet product_rs = insert_product_ps.getGeneratedKeys();
-            if (!product_rs.next()) {
-                throw new SQLException("No key returned for product");
+            // Get created order id
+            ResultSet order_rs = insert_order_ps.getGeneratedKeys();
+            if (!order_rs.next()) {
+                throw new SQLException("No key returned for order");
             }
-            order.setId(product_rs.getLong(1));
+            order.setId(order_rs.getLong(1));
 
-            // Close client streams
-            product_rs.close();
-            insert_product_ps.close();
+
+            //Create order details
+            PreparedStatement insert_orderDetails_ps = connection.prepareStatement(INSERT_ORDER_DETAIL, PreparedStatement.RETURN_GENERATED_KEYS);
+
+            for(OrderDetail orderDetail : order.getOrdersDetail()){
+                insert_orderDetails_ps.setLong(1, orderDetail.getProduct().getId());
+                insert_orderDetails_ps.setDouble(2, orderDetail.getProductPrice());
+                insert_orderDetails_ps.setDouble(3, order.getId());
+                insert_orderDetails_ps.addBatch();
+            }
+            // Execute orderDetails and close stream
+            insert_orderDetails_ps.executeBatch();
+            connection.commit();
+
+            insert_orderDetails_ps.close();
+
+            // Close order streams
+            order_rs.close();
+            insert_order_ps.close();
 
             connection.close();
             return order;

@@ -38,6 +38,13 @@ public class ProductResource {
         return service.getById(id);
     }
 
+    @DELETE
+    @RolesAllowed({"ADMIN"})
+    @JsonView(View.Public.class)
+    public int delete(Product product) throws SQLException {
+        return service.delete(product);
+    }
+
     @POST
     @RolesAllowed({"ADMIN"})
     @Consumes(MediaType.APPLICATION_JSON)
