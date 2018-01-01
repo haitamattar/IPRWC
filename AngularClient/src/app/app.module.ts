@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 
 import {AuthGuard} from './shared/auth-guard.service';
 import {UserModule} from './user/user.module';
+
 import {SharedModule} from './shared/shared.module';
 
 import { RoleGuardService } from './shared/role-guard.service';
 import { RoutesModule } from './routes.module';
 import { ProductModule } from './product/product.module';
+import { HomeModule } from './home/home.module';
 
 
 
@@ -23,7 +25,8 @@ import { ProductModule } from './product/product.module';
     UserModule,
     SharedModule,
     RoutesModule,
-    ProductModule
+    ProductModule,
+    HomeModule
   ],
   exports: [
     PublicModule

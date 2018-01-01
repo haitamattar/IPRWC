@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
       data => {
         this.userService.storeAuth(data, false);
         console.log('GELUKT', this.authService.getAuthenticator());
+        this.userService.goHome();
       },
       error => {
         console.log('probleem');

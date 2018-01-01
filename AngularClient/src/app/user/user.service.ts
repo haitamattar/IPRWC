@@ -7,33 +7,33 @@ import { AuthorizationService } from '../shared/authorization.service';
 
 @Injectable()
 export class UserService {
-    constructor(private api: ApiService, private authService: AuthorizationService, private router: Router) {
+  constructor(private api: ApiService, private authService: AuthorizationService, private router: Router) {
 
-    }
+  }
 
-    public getAll(): Observable<User[]> {
-        return this.api.get<User[]>('users');
-    }
+  public getAll(): Observable<User[]> {
+    return this.api.get<User[]>('users');
+  }
 
-    public create(user: User): Observable<User> {
-        return this.api.post<User>('users/add', user);
-    }
+  public create(user: User): Observable<User> {
+    return this.api.post<User>('users/add', user);
+  }
 
-    public login(user: User) {
-        this.authService.setAuthorization(user.email, user.password);
-        return this.api.get<User>('users/me');
-    }
+  public login(user: User) {
+    this.authService.setAuthorization(user.email, user.password);
+    return this.api.get<User>('users/me');
+  }
 
-    public logout() {
-        this.authService.deleteAuthorization();
-        this.goHome();
-    }
+  public logout() {
+    this.authService.deleteAuthorization();
+    this.goHome();
+  }
 
-  private goHome() {
-    this.router.navigate(['home']);
+  public goHome() {
+    this.router.navigate(['']);
   }
 
   storeAuth(authenticator, remember) {
-        this.authService.storeAuthorization(authenticator, remember);
-    }
+    this.authService.storeAuthorization(authenticator, remember);
+  }
 }
