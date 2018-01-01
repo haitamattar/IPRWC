@@ -121,7 +121,7 @@ public class ProductDAO {
     }
 
     // create product
-    private Product createProduct(ResultSet rset) throws SQLException {
+    public Product createProduct(ResultSet rset) throws SQLException {
 
         Category category = new Category(rset.getLong("cat_id"), rset.getString("cat_name"));
 

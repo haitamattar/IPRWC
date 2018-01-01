@@ -236,10 +236,8 @@ public class OrderDAO {
         return order;
     }
 
-    // Create Order
+    // Create Order with user object
     private Order createOrderWithUser(ResultSet rset, User user) throws SQLException {
-
-
 
         Order order = new Order(
                 rset.getLong("id"),
