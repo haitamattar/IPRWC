@@ -1,3 +1,17 @@
-<p>
-  products works!
-</p>
+<div class="container">
+  <section class="header">
+    <h1>The best products</h1>
+    <p>products</p>
+  </section>
+</div>
+
+<div class="container">
+  <div *ngFor="let row of dataSource; let i = index" class="row">
+
+    <div *ngFor="let product of row"  class="four columns">
+      <div class="product">
+        <p>{{ product.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
