@@ -34,6 +34,7 @@ public class UserService extends BaseService<User>
         return requireResult(userDAO.findById(id));
     }
 
+
     public User insertUser(User user){
         try {
             return userDAO.insert(user);

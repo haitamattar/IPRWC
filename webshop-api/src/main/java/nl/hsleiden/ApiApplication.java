@@ -18,6 +18,7 @@ import javax.servlet.DispatcherType;
 import nl.hsleiden.model.User;
 import nl.hsleiden.service.AuthenticationService;
 import org.eclipse.jetty.servlet.FilterHolder;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +46,7 @@ public class ApiApplication extends Application<ApiConfiguration>
         
         bootstrap.addBundle(assetsBundle);
         bootstrap.addBundle(guiceBundle);
+//        bootstrap.addBundle(new MultiPartBundle());
     }
     
     @Override
@@ -81,7 +83,7 @@ public class ApiApplication extends Application<ApiConfiguration>
                         .setUnauthorizedHandler(unauthorizedHandler)
                         .buildAuthFilter())
         );
-
+        environment.jersey().register(MultiPartFeature.class);
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
     }

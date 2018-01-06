@@ -1,9 +1,12 @@
 package nl.hsleiden.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.mysql.cj.jdbc.Blob;
 import nl.hsleiden.View;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import java.awt.*;
 
 
 public class Product {
@@ -30,6 +33,10 @@ public class Product {
     @JsonView(View.Public.class)
     private double price;
 
+    @JsonView(View.Public.class)
+    private byte[] image;
+
+
     public Product() {
 
     }
@@ -40,6 +47,15 @@ public class Product {
         this.description = description;
         this.category = category;
         this.price = price;
+    }
+
+    public Product(long id, String name, String description, Category category, double price, byte[] image) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.image = image;
     }
 
 
@@ -81,5 +97,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
