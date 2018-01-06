@@ -7,6 +7,8 @@
       <li *ngIf="!(isLoggedIn$ | async)"><a routerLink="/login">Login</a></li>
       <li><a routerLink="/products">Products</a></li>
       <li><a routerLink="/admin">admin</a></li>
+      <li><a routerLink="/admin"><i class="fa fa-shopping-cart" aria-hidden="true">{{(shoppingCartItems$ | async).length}}</i>
+</a></li>
       <!-- <li *ngSwitchCase="'FRANCHISER'"><a routerLink="/user" >Gebruikers</a></li> -->
       <!-- <li><a routerLink="/wistjedat" >Wist je dat</a></li> -->
       <li><a *ngIf="isLoggedIn$ | async" routerLink="/" (click)="logout()">Uitloggen</a></li>

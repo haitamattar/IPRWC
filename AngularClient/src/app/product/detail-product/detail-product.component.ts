@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { AuthorizationService } from '../../shared/authorization.service';
+import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'app-detail-product',
@@ -14,7 +15,7 @@ export class DetailProductComponent implements OnInit {
   public dataSource = null;
 
   constructor(private router: Router, private route: ActivatedRoute, private productService: ProductService,
-      private authService: AuthorizationService) {
+      private authService: AuthorizationService, private shoppingCartService: ShoppingCartService) {
     this.product = new Product();
   }
 
@@ -32,6 +33,12 @@ export class DetailProductComponent implements OnInit {
       error => {
         this.router.navigate(['product/' + id + '/NotFound']);
       });
+  }
+
+  addToShoppingCart() {
+      this.shoppingCartService.addToCart(this.product);
+      console.log('add product', (this.shoppingCartService.getItems()));
+
   }
 
 }
