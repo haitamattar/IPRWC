@@ -10,13 +10,17 @@ import { Product } from './product';
 @Injectable()
 export class ProductService {
 
-    constructor(private api: ApiService, private authService: AuthorizationService, private router: Router) {
+  constructor(private api: ApiService, private authService: AuthorizationService, private router: Router) {
 
-    }
+  }
 
-    // Get all clients
-    public getAll(): Observable<Product[]> {
-            return this.api.get<Product[]>('products');
-    }
+  // Get all clients
+  public getAll(): Observable<Product[]> {
+    return this.api.get<Product[]>('products');
+  }
+
+  public getDetail(id: Number): Observable<Product> {
+    return this.api.get<Product>('products/' + id);
+  }
 
 }

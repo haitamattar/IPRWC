@@ -5,7 +5,7 @@ export class Product {
     public id: number = null,
     public name?: string,
     public description?: string,
-    public category?: Category,
+    public category: Category = new Category(),
     public price?: number
   ) {
 

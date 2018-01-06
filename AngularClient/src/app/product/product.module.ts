@@ -5,13 +5,14 @@ import { ProductService } from './product.service';
 
 import { ProductsComponent } from './products/products.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { DetailProductComponent } from './detail-product/detail-product.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule
   ],
-  declarations: [ProductsComponent, CreateProductComponent],
+  declarations: [ProductsComponent, CreateProductComponent, DetailProductComponent],
   providers: [ProductService]
 })
 export class ProductModule { }

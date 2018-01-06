@@ -3,10 +3,10 @@ export class User {
     public id?: number,
     public email?: string,
     public password?: string,
-    public fullname?: string,
+    public fullName?: string,
     public postalcode?: string,
     public streetnumber?: number,
-    public role?: string
+    public role: string = 'CUSTOMER'
     ) {
   }
 }

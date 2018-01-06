@@ -15,8 +15,12 @@ export class UserService {
     return this.api.get<User[]>('users');
   }
 
+  public getDetail(user: User): Observable<User> {
+    return this.api.get<User>('users/me', user);
+  }
+
   public create(user: User): Observable<User> {
-    return this.api.post<User>('users/add', user);
+    return this.api.post<User>('users', user);
   }
 
   public login(user: User) {

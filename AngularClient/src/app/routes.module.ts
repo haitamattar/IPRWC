@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule} from '@angular/router';
 import { RoleGuardService } from './shared/role-guard.service';
-
+// User
 import { LoginComponent } from './user/login/login.component';
-import { HomeComponent } from './home/home.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { RegisterComponent } from './user/register/register.component';
 
+import { HomeComponent } from './home/home.component';
+// Products
 import { ProductsComponent } from './product/products/products.component';
 import { CreateProductComponent } from './product/create-product/create-product.component';
+import { DetailProductComponent } from './product/detail-product/detail-product.component';
 
 import { AuthGuard } from './shared/auth-guard.service';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 export const routes: Routes =
 [
@@ -17,17 +22,30 @@ export const routes: Routes =
         canActivate: [AuthGuard, RoleGuardService],
         data: { allowedRole: 'ADMIN' },
         children: [
-            { path: 'products', component: ProductsComponent},
             {
                         path: 'maakProduct',
                         component: CreateProductComponent
                     },
         ]
     },
-
+    {
+        path: 'user',
+        canActivate: [AuthGuard, RoleGuardService],
+        data: { allowedRole: 'CUSTOMER' },
+        children: [
+            {
+                        path: 'me',
+                        component: UserDetailComponent
+                    },
+        ]
+    },
+    // public routes
     { path: '', component: HomeComponent },
-
-    { path: 'login', component: LoginComponent }
+    { path: 'products', component: ProductsComponent},
+    { path: 'product/:id', component: DetailProductComponent},
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
+    { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

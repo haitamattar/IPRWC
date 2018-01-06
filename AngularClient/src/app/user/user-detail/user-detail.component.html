@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="registerForm">
+      <h1>User: {{ user.fullName }}</h1>
+    <form autocomplete="off" #createUserForm='ngForm' class="" (ngSubmit)="createUser(user);">
+      <div class="row">
+        <div class="six columns">
+
+          <label for="emailInput">Email</label>
+          <input [(ngModel)]="user.email" name="email" required class="u-full-width" type="email" placeholder="example@mailbox.com" id="emailInput">
+
+          <label for="nameInput">Fullname</label>
+          <input [(ngModel)]="user.fullName" name="fullName" required class="u-full-width" type="text" placeholder="full name" id="fullnameInput">
+
+          <label for="passwordInput">Password</label>
+          <input [(ngModel)]="user.password" name="password" required class="u-full-width" type="password" placeholder="password" id="passwordInput">
+        </div>
+        <div class="six columns">
+
+          <label for="postalcodeInput">Postalcode</label>
+          <input [(ngModel)]="user.postalcode" name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
+
+          <label for="streetnumberInput">Streetnumber</label>
+          <input [(ngModel)]="user.streetnumber" name="streetnumber" required class="u-full-width" type="text" placeholder="streetnumber" id="streetnumberInput">
+        </div>
+      </div>
+      <input class="button-primary" type="submit" value="Submit">
+    </form>
+  </div>
+</div>

@@ -19,7 +19,10 @@ export class ProductsComponent implements OnInit {
         this.dataSource = products;
         this.dataSource = this.chunck(this.dataSource, 3);
         console.log(this.dataSource);
-      }
+    },
+    error => {
+        console.log('Probleem');
+    }
     );
   }
 

@@ -1,13 +1,15 @@
 <nav>
   <div class="navigation">
-    <a href=''><div class="logo"> WEBSHOP </div></a>
+    <a href=''>
+      <div class="logo"> WEBSHOP </div>
+    </a>
     <ul class="menu" [ngSwitch]="authenticatorRole">
-      <li *ngIf="!authenticated" ><a routerLink="/login" (click)="toggleMenu()">Login</a></li>
-      <li><a routerLink="/products" (click)="toggleMenu()">Products</a></li>
-      <li><a routerLink="/admin" (click)="toggleMenu()">admin</a></li>
-      <!-- <li *ngSwitchCase="'FRANCHISER'"><a routerLink="/user" (click)="toggleMenu()">Gebruikers</a></li> -->
-      <!-- <li><a routerLink="/wistjedat" (click)="toggleMenu()">Wist je dat</a></li> -->
-      <li><a routerLink="/" (click)="toggleMenu(); logout()">Uitloggen</a></li>
+      <li *ngIf="!(isLoggedIn$ | async)"><a routerLink="/login">Login</a></li>
+      <li><a routerLink="/products">Products</a></li>
+      <li><a routerLink="/admin">admin</a></li>
+      <!-- <li *ngSwitchCase="'FRANCHISER'"><a routerLink="/user" >Gebruikers</a></li> -->
+      <!-- <li><a routerLink="/wistjedat" >Wist je dat</a></li> -->
+      <li><a *ngIf="isLoggedIn$ | async" routerLink="/" (click)="logout()">Uitloggen</a></li>
     </ul>
   </div>
 </nav>

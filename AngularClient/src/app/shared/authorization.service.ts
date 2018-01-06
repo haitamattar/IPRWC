@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { User } from '../user/user';
 
@@ -8,7 +9,7 @@ export class AuthorizationService {
   private login: string = null;
   private password: string = null;
   private authenticator: User = null;
-  public authorized$ = new Subject<boolean>();
+  public authorized$ = new BehaviorSubject<boolean>(false);
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -19,6 +20,10 @@ export class AuthorizationService {
 
   public hasAuthorization(): boolean {
     return this.login !== null && this.password !== null;
+  }
+
+  get isLoggedIn() {
+    return this.authorized$.asObservable(); // {2}
   }
 
   public hasRole(role): boolean {

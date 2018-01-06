@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { PublicModule } from '../../public.module';
 import { AuthorizationService } from '../authorization.service';
@@ -10,15 +11,20 @@ import { AuthorizationService } from '../authorization.service';
 })
 export class HeaderComponent implements OnInit {
 
-  public authenticated: boolean;
+  isLoggedIn$: Observable<boolean>;
 
-  constructor(private authService: AuthorizationService) {
+  constructor(private authService: AuthorizationService, private router: Router) {
 
   }
 
   ngOnInit() {
-    this.authenticated = this.authService.hasAuthorization();
+    this.isLoggedIn$ = this.authService.isLoggedIn;
+    console.log('AUTH', this.isLoggedIn$);
   }
 
+  public logout() {
+      this.authService.deleteAuthorization();
+      this.router.navigate(['login']);
+  }
 
 }
