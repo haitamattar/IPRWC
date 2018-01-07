@@ -4,12 +4,16 @@ import {User} from '../user/user';
 export class ShoppingCart {
   constructor(
     public user: User = new User(),
-    public products?: Product[]
+    public products: Product[] = []
   ) {
 
   }
 
-  addProduct(product: Product) {
+  public getAllProducts() {
+      return this.products;
+  }
+
+  public addProduct(product: Product) {
       this.products.push(product);
   }
 

@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   public shoppingCartItems$: Observable<Product[]>;
 
 
-  isLoggedIn$: Observable<boolean>;
+  private isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthorizationService, private shoppingCartService: ShoppingCartService,
     private router: Router) {
@@ -32,9 +32,10 @@ export class HeaderComponent implements OnInit {
 
   public logout() {
     this.authService.deleteAuthorization();
-    this.router.navigate(['login']);
-    this.shoppingCartItems$ = null;
     this.shoppingCartService.removeShoppingCartSession();
+    this.shoppingCartItems$ = null;
+    this.shoppingCartItems$.subscribe(_ => _);
+    this.router.navigate(['login']);
   }
 
 }

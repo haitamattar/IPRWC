@@ -3,6 +3,7 @@ import { User } from '../user';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../../shared/authorization.service';
+import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
   user: User = new User();
 
 
-  constructor(private userService: UserService, private authService: AuthorizationService, private router: Router) { }
+  constructor(private userService: UserService, private shoppingCartService: ShoppingCartService,
+       private authService: AuthorizationService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit {
       data => {
         this.userService.storeAuth(data, false);
         console.log('its working', this.authService.getAuthenticator());
+        this.shoppingCartService.retrieveAllDataFromDatabase();
         this.userService.goHome();
       },
       error => {

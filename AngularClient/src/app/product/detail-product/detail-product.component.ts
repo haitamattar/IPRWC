@@ -15,7 +15,7 @@ export class DetailProductComponent implements OnInit {
   public dataSource = null;
 
   constructor(private router: Router, private route: ActivatedRoute, private productService: ProductService,
-      private authService: AuthorizationService, private shoppingCartService: ShoppingCartService) {
+    private authService: AuthorizationService, private shoppingCartService: ShoppingCartService) {
     this.product = new Product();
   }
 
@@ -36,9 +36,7 @@ export class DetailProductComponent implements OnInit {
   }
 
   addToShoppingCart() {
-      this.shoppingCartService.addToCart(this.product);
-      console.log('add product', (this.shoppingCartService.getItems()));
-
+    this.shoppingCartService.addToCart(this.product);
   }
 
 }

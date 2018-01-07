@@ -15,12 +15,14 @@ public class ShoppingCartDAO {
 
     final String GET_ALL_ITEMS_FROM_SHOPPING_CART = "SELECT `shoppingCart`.*, `product`.*, " +
                                                     "`productCategory`.`id` AS 'cat_id', " +
-                                                    "`productCategory`.`name` AS 'cat_name' " +
+                                                    "`productCategory`.`name` AS 'cat_name', `blob` " +
                                                     "FROM `shoppingCart`" +
                                                     "LEFT JOIN `product` " +
                                                     " ON `shoppingCart`.`product_id` = `product`.`id`" +
                                                     "LEFT JOIN `productCategory` " +
                                                     " ON `product`.`product_category_id` = `productCategory`.`id` " +
+                                                    "LEFT JOIN `blobData` ON `parent_id` = `product`.`id` " +
+                                                    " AND `blobData`.`table` = 'product'" +
                                                     "WHERE `product`.`product_status` = 'ACTIVE' " +
                                                     " AND `shoppingCart`.`user_id` = ?;";
 
