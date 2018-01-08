@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../product.service';
+import { Product } from '../product';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-products',
@@ -7,7 +9,7 @@ import { ProductService } from '../product.service';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  public dataSource = null;
+  public products: Product[] = [];
 
   constructor(private productService: ProductService) {
     this.getAllProducts();
@@ -16,9 +18,9 @@ export class ProductsComponent implements OnInit {
   private getAllProducts() {
     this.productService.getAll().subscribe(
       products => {
-        this.dataSource = products;
-        this.dataSource = this.chunck(this.dataSource, 3);
-        console.log(this.dataSource);
+        this.products = products;
+        this.products = this.chunck(this.products, 3);
+        console.log(this.products);
     },
     error => {
         console.log('Probleem');

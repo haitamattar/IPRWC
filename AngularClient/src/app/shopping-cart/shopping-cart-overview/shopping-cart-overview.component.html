@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="registerForm">
+    <h1>Checkout</h1>
+    <div class="row">
+      <div class="six columns">
+
+        <label for="postalcodeInput">Postalcode</label>
+        <input name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
+
+        <label for="streetnumberInput">Streetnumber</label>
+        <input name="streetnumber" required class="u-full-width" type="text" placeholder="streetnumber" id="streetnumberInput">
+        <input class="button-primary" type="submit" value="Purchase">
+
+      </div>
+
+      <div class="six columns">
+        <table class="u-full-width">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of uniqueData$ | async">
+              <td>{{ product.name }}<br> {{ product.description }}</td>
+              <td>{{ product.price }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>

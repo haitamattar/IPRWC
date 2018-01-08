@@ -45,7 +45,7 @@ export class AuthorizationService {
     };
 
     const authorizationString = JSON.stringify(authorization);
-    const storage = local ? localStorage : sessionStorage;
+    const storage = localStorage;
 
     storage.setItem('authorization', authorizationString);
 

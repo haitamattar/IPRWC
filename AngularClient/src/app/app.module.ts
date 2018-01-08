@@ -13,6 +13,7 @@ import { RoleGuardService } from './shared/role-guard.service';
 import { RoutesModule } from './routes.module';
 import { ProductModule } from './product/product.module';
 import { HomeModule } from './home/home.module';
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 
 
@@ -26,7 +27,8 @@ import { HomeModule } from './home/home.module';
     SharedModule,
     RoutesModule,
     ProductModule,
-    HomeModule
+    HomeModule,
+    ShoppingCartModule
   ],
   exports: [
     PublicModule

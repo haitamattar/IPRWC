@@ -11,8 +11,8 @@ import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
   styleUrls: ['./detail-product.component.css']
 })
 export class DetailProductComponent implements OnInit {
-  product: Product;
-  public dataSource = null;
+  public product: Product = null;
+  private isDataAvailable: Boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private productService: ProductService,
     private authService: AuthorizationService, private shoppingCartService: ShoppingCartService) {
@@ -29,6 +29,7 @@ export class DetailProductComponent implements OnInit {
       .subscribe(
       product => {
         this.product = product;
+        this.isDataAvailable = true;
       },
       error => {
         this.router.navigate(['product/' + id + '/NotFound']);

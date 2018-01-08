@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './product/products/products.component';
 import { CreateProductComponent } from './product/create-product/create-product.component';
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
+// ShoppingCart
+import { ShoppingCartOverviewComponent } from './shopping-cart/shopping-cart-overview/shopping-cart-overview.component';
+
 
 import { AuthGuard } from './shared/auth-guard.service';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
@@ -43,6 +46,7 @@ export const routes: Routes =
     { path: '', component: HomeComponent },
     { path: 'products', component: ProductsComponent},
     { path: 'product/:id', component: DetailProductComponent},
+    { path: 'shoppingCart', component: ShoppingCartOverviewComponent},
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: '**', component: PageNotFoundComponent }

@@ -24,18 +24,17 @@ export class ShoppingCartService {
 
 
   public addToCart(item: Product) {
-    console.log('Add to cart');
-    console.log('CART ALL PSOR: ', this.authService.getAuthenticator());
-
-
     this.itemsInCartSubject.next([...this.itemsInCart, item]);
     this.shoppingCart.products = this.itemsInCart;
-    console.log('SHIT: ', this.shoppingCart.getAllProducts());
     this.setShoppingCartSession(this.shoppingCart);
   }
 
   public getItems(): Observable<Product[]> {
     return this.itemsInCartSubject;
+  }
+
+  public getWholeShoppingCart(): ShoppingCart {
+    return this.shoppingCart;
   }
 
   public retrieveAllDataFromDatabase() {
@@ -56,7 +55,7 @@ export class ShoppingCartService {
         // }
       },
       error => {
-        console.log('Cannot get data form shoppingCart');
+        console.log('No data in shoppingCart');
       });
   }
 
@@ -70,7 +69,7 @@ export class ShoppingCartService {
   public setShoppingCartSession(shoppingCartItems: ShoppingCart) {
     this.shoppingCart.setAllProducts(shoppingCartItems.getAllProducts());
     const shoppingCartString = JSON.stringify(shoppingCartItems);
-    const storage = sessionStorage;
+    const storage = localStorage;
 
     storage.setItem('shoppingCart', shoppingCartString);
   }
@@ -78,7 +77,7 @@ export class ShoppingCartService {
   private restoreShoppingCartSession(): void {
     this.currentUser = this.authService.getAuthenticator();
 
-    let shoppingCartString = sessionStorage.getItem('shoppingCart');
+    let shoppingCartString = localStorage.getItem('shoppingCart');
 
     if (shoppingCartString === null) {
       shoppingCartString = localStorage.getItem('shoppingCart');
@@ -99,7 +98,7 @@ export class ShoppingCartService {
     this.itemsInCart = null;
     this.itemsInCartSubject.next(null);
     this.shoppingCart = null;
-    sessionStorage.removeItem('shoppingCart');
+    localStorage.removeItem('shoppingCart');
   }
 
 }

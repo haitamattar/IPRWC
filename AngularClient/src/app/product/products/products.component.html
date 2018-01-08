@@ -6,11 +6,13 @@
 </div>
 
 <div class="container">
-  <div *ngFor="let row of dataSource; let i = index" class="row">
+  <div *ngFor="let row of products; let i = index" class="row">
 
     <div *ngFor="let product of row"  class="four columns">
       <div class="product">
-        <p>{{ product.name }}</p>
+        <a routerLink="/product/{{product.id}}" ><h4>{{ product.name }}</h4></a>
+        {{ product.description }}
+          <img [src]="'data:image/png;base64,'+product.image" />
       </div>
     </div>
   </div>
