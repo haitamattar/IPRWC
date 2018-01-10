@@ -14,11 +14,15 @@ public class ShoppingCart {
 
     @NotEmpty
     @JsonView(View.Public.class)
-    private List<Product> products;
+    private List<CartItem> cartItems;
 
-    public ShoppingCart(User user, List<Product> products) {
+    public ShoppingCart(){
+
+    }
+
+    public ShoppingCart(User user, List<CartItem> cartItems) {
         this.user = user;
-        this.products = products;
+        this.cartItems = cartItems;
     }
 
     public User getUser() {
@@ -29,11 +33,11 @@ public class ShoppingCart {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<CartItem> getProducts() {
+        return cartItems;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setProducts(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

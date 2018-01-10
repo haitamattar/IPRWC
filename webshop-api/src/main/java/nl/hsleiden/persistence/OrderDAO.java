@@ -61,12 +61,12 @@ public class OrderDAO {
 
 
     // insert order with orderDetails
-    public Order insert(Order order) throws SQLException {
+    public Long insert(ShoppingCart shoppingCart) throws SQLException {
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()){
             connection.setAutoCommit(false);
             // Insert order id
             PreparedStatement insert_order_ps = connection.prepareStatement(INSERT_ORDER, PreparedStatement.RETURN_GENERATED_KEYS);
-            insert_order_ps.setDouble(1, order.getUser().getId());
+            insert_order_ps.setDouble(1, shoppingCart.getUser().getId());
             insert_order_ps.execute();
 
             // Get created order id
@@ -74,17 +74,20 @@ public class OrderDAO {
             if (!order_rs.next()) {
                 throw new SQLException("No key returned for order");
             }
-            order.setId(order_rs.getLong(1));
+
+            Long orderId = order_rs.getLong(1);
 
 
             //Create order details
             PreparedStatement insert_orderDetails_ps = connection.prepareStatement(INSERT_ORDER_DETAIL, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            for(OrderDetail orderDetail : order.getOrdersDetail()){
-                insert_orderDetails_ps.setLong(1, orderDetail.getProduct().getId());
-                insert_orderDetails_ps.setDouble(2, orderDetail.getProductPrice());
-                insert_orderDetails_ps.setDouble(3, order.getId());
-                insert_orderDetails_ps.addBatch();
+            for(CartItem cartItem : shoppingCart.getProducts()){
+                for (int i=0; i < cartItem.getTotal(); i++) {
+                    insert_orderDetails_ps.setLong(1, cartItem.getProduct().getId());
+                    insert_orderDetails_ps.setDouble(2, cartItem.getProduct().getPrice());
+                    insert_orderDetails_ps.setDouble(3, orderId);
+                    insert_orderDetails_ps.addBatch();
+                }
             }
             // Execute orderDetails and close stream
             insert_orderDetails_ps.executeBatch();
@@ -95,9 +98,10 @@ public class OrderDAO {
             // Close order streams
             order_rs.close();
             insert_order_ps.close();
-
             connection.close();
-            return order;
+
+            MysqlDbAccess.getDatabase().getShoppingCartDao().deleteCompleteShoppingCart(shoppingCart.getUser());
+            return orderId;
         }
     }
 

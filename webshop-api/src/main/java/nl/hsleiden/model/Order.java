@@ -37,6 +37,13 @@ public class Order {
         this.ordersDetail = ordersDetail;
     }
 
+    public Order(User user, List<OrderDetail> ordersDetail) {
+        this.id = id;
+        this.user = user;
+        this.orderDateTime = orderDateTime;
+        this.ordersDetail = ordersDetail;
+    }
+
     public Timestamp getOrderDateTime() {
         return orderDateTime;
     }

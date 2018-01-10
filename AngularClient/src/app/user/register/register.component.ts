@@ -3,6 +3,7 @@ import { User } from '../user';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { AuthorizationService } from '../../shared/authorization.service';
+import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,8 @@ export class RegisterComponent implements OnInit {
 
   user: User;
 
-  constructor(private userService: UserService, private authService: AuthorizationService, private router: Router) {
+  constructor(private userService: UserService, private authService: AuthorizationService, private router: Router,
+  private shoppingCartService: ShoppingCartService) {
     this.user = new User();
   }
 
@@ -38,7 +40,7 @@ export class RegisterComponent implements OnInit {
     this.userService.login(this.user).subscribe(
       data => {
         this.userService.storeAuth(data, false);
-        console.log('GELUKT', this.authService.getAuthenticator());
+        this.shoppingCartService.retrieveAllDataFromDatabase();
         this.userService.goHome();
       },
       error => {

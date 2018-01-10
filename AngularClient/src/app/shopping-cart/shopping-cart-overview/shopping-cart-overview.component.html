@@ -3,28 +3,35 @@
     <h1>Checkout</h1>
     <div class="row">
       <div class="six columns">
+        <h6>Order details</h6>
+        <hr>
+        <form (ngSubmit)="purchase();">
+        <label>Shipping</label>
+        <input type="radio" name="shipping" value="DHL" checked> DHL<br>
+        <input type="radio" name="shipping" value="PostNL"> PostNL<br>
 
-        <label for="postalcodeInput">Postalcode</label>
-        <input name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
-
-        <label for="streetnumberInput">Streetnumber</label>
-        <input name="streetnumber" required class="u-full-width" type="text" placeholder="streetnumber" id="streetnumberInput">
-        <input class="button-primary" type="submit" value="Purchase">
-
+        <label>Creditcard</label>
+        <input name="creditcard" required class="u-full-width" type="text" placeholder="creditcard number" id="creditcard">
+        <input class="button-primary u-full-width" type="submit" value="Purchase">
+    </form>
       </div>
 
       <div class="six columns">
+          <h6>Your order</h6>
+          <hr>
         <table class="u-full-width">
           <thead>
             <tr>
               <th>Product</th>
+              <th>Amount</th>
               <th>Price</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of uniqueData$ | async">
-              <td>{{ product.name }}<br> {{ product.description }}</td>
-              <td>{{ product.price }}</td>
+            <tr *ngFor="let cartItem of shoppingCart.cartItems" >
+              <td>{{ cartItem.product.name }}<br> {{ cartItem.product.description }}</td>
+               <td><input min="1" (ngModelChange)="editCart()" name='total' type='number' [(ngModel)]="cartItem.total"> {{ cartItem.total }}</td>
+              <td>{{ cartItem.product.price }}</td>
             </tr>
           </tbody>
         </table>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { PublicModule } from '../../public.module';
 import { AuthorizationService } from '../authorization.service';
 import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
-import { Product } from '../../product/product';
+import { ShoppingCart } from '../../shopping-cart/shopping-cart';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,8 @@ import { Product } from '../../product/product';
 })
 export class HeaderComponent implements OnInit {
 
-  public shoppingCartItems$: Observable<Product[]>;
+  public shoppingCartItems$: Observable<ShoppingCart>;
+  public amountCart: number;
 
 
   private isLoggedIn$: Observable<boolean>;
@@ -25,16 +26,20 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isLoggedIn$ = this.authService.isLoggedIn;
-    console.log('AUTH', this.isLoggedIn$);
-    this.shoppingCartItems$ = this.shoppingCartService.getItems();
+    this.shoppingCartItems$ = this.shoppingCartService.getShoppingCartOb();
     this.shoppingCartItems$.subscribe(_ => _);
+    this.shoppingCartItems$.subscribe(
+      data => {
+        this.amountCart = new ShoppingCart(data.user, data.cartItems).getAmountOfCartItems();
+      },
+      _ => { console.log('goeie'); this.amountCart = 0; });
   }
 
   public logout() {
-    this.authService.deleteAuthorization();
     this.shoppingCartService.removeShoppingCartSession();
-    this.shoppingCartItems$ = null;
+    this.authService.deleteAuthorization();
     this.shoppingCartItems$.subscribe(_ => _);
+    this.shoppingCartService.removeCurrentUser();
     this.router.navigate(['login']);
   }
 

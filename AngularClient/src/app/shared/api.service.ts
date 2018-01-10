@@ -13,13 +13,13 @@ export class ApiService {
     let queryString = '';
 
     if (typeof queryParameters === 'object') {
-      for (const key in queryParameters ) {
-          // if (queryParameters.hasOwnProperty(key)) {
-            const value = queryParameters[key];
-            const prefix = queryString.length === 0 ? '?' : '&';
+      for (const key in queryParameters) {
+        // if (queryParameters.hasOwnProperty(key)) {
+        const value = queryParameters[key];
+        const prefix = queryString.length === 0 ? '?' : '&';
 
-            queryString += `${prefix}${key}=${value}`;
-          // }
+        queryString += `${prefix}${key}=${value}`;
+        // }
       }
     }
     return queryString;
@@ -41,7 +41,7 @@ export class ApiService {
     return headers;
   }
 
-// Http methods
+  // Http methods
 
   // Get http method - get record
   public get<T>(path: string, queryParameters?: Object): Observable<T> {
@@ -61,7 +61,7 @@ export class ApiService {
   }
 
   // Put http method - update record
-  public put<T>(path: string, data: string, queryParameters?: Object): Observable<T> {
+  public put<T>(path: string, data: Object, queryParameters?: Object): Observable<T> {
     const uri = this.createURI(path, queryParameters);
     const headers = this.createRequestHeaders();
 

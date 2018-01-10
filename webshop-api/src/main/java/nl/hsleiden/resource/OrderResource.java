@@ -6,6 +6,7 @@ import com.google.inject.Singleton;
 import io.dropwizard.auth.Auth;
 import nl.hsleiden.View;
 import nl.hsleiden.model.Order;
+import nl.hsleiden.model.ShoppingCart;
 import nl.hsleiden.model.User;
 import nl.hsleiden.service.OrderService;
 
@@ -62,11 +63,11 @@ public class OrderResource {
     }
 
     @POST
-    @RolesAllowed({"ADMIN", "FRANCHISER"})
+    @RolesAllowed({"CUSTOMER"})
     @JsonView(View.Public.class)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Order insert(Order order){
-        return service.insert(order);
+    public Long insert(ShoppingCart shoppingCart){
+        return service.insert(shoppingCart);
     }
 
 

@@ -40,10 +40,11 @@ public class ProductResource {
     @Path("/{id}")
     @JsonView(View.Public.class)
     public Product retrieve(@PathParam("id") long id) throws SQLException {
-        if(service.getById(id) == null){
+        Product product = service.getById(id);
+        if(product == null){
                 throw new WebApplicationException(404);
         }
-        return service.getById(id);
+        return product;
     }
 
     @DELETE

@@ -1,6 +1,7 @@
 package nl.hsleiden.service;
 
 import nl.hsleiden.model.Order;
+import nl.hsleiden.model.ShoppingCart;
 import nl.hsleiden.model.User;
 import nl.hsleiden.persistence.OrderDAO;
 
@@ -20,9 +21,9 @@ public class OrderService {
     }
 
     // Insert order
-    public Order insert(Order order){
+    public Long insert(ShoppingCart shoppingCart){
         try{
-            return orderDAO.insert(order);
+            return orderDAO.insert(shoppingCart);
         } catch (SQLException e) {
             e.printStackTrace();
         }
