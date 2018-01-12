@@ -3,38 +3,64 @@
     <h1>Checkout</h1>
     <div class="row">
       <div class="six columns">
-        <h6>Order details</h6>
+        <h5>Order details</h5>
         <hr>
-        <form (ngSubmit)="purchase();">
-        <label>Shipping</label>
-        <input type="radio" name="shipping" value="DHL" checked> DHL<br>
-        <input type="radio" name="shipping" value="PostNL"> PostNL<br>
+        <form *ngIf=" shoppingCart.cartItems.length > 0; else buy_some_stuff " (ngSubmit)="purchase();">
+          <div *ngIf="shoppingCart.user != null;">
+            <label>Shipping details</label>
+            <ol>
+              <li>{{shoppingCart.user.fullName}}</li>
+              <li>{{shoppingCart.user.street}} </li>
+              <li>{{shoppingCart.user.postalcode | uppercase }} {{shoppingCart.user.city}}</li>
+              <li>The Netherlands</li>
+            </ol>
+          </div>
+          <label>Courier services</label>
+          <input type="radio" name="shipping" value="DHL" checked> DHL<br>
+          <input type="radio" name="shipping" value="PostNL"> PostNL<br>
 
-        <label>Creditcard</label>
-        <input name="creditcard" required class="u-full-width" type="text" placeholder="creditcard number" id="creditcard">
-        <input class="button-primary u-full-width" type="submit" value="Purchase">
-    </form>
+          <label>Creditcard</label>
+          <input name="creditcard" required class="u-full-width" type="text" placeholder="creditcard number" id="creditcard">
+          <input class="button-primary u-full-width" type="submit" value="Purchase">
+        </form>
+
+        <ng-template #buy_some_stuff>
+          <h6>Your shoppingCart is still empty, go buy some stuff!!!</h6>
+          <br>
+          <input routerLink="/products" class="button-primary u-full-width" type="submit" value="Lets buy some stuff!!">
+        </ng-template>
+
       </div>
 
       <div class="six columns">
-          <h6>Your order</h6>
-          <hr>
-        <table class="u-full-width">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Amount</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let cartItem of shoppingCart.cartItems" >
-              <td>{{ cartItem.product.name }}<br> {{ cartItem.product.description }}</td>
-               <td><input min="1" (ngModelChange)="editCart()" name='total' type='number' [(ngModel)]="cartItem.total"> {{ cartItem.total }}</td>
-              <td>{{ cartItem.product.price }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <h5>Your order</h5> <p *ngIf="shoppingCart.cartItems.length > 0;" class="small">edit your shopping cart</p>
+        <hr>
+        <div *ngIf=" shoppingCart.cartItems.length > 0;">
+          <table class="u-full-width">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cartItem of shoppingCart.cartItems">
+                <td>{{ cartItem.product.name }}<br> {{ cartItem.product.description }}</td>
+                <td><input min="1" (ngModelChange)="editCart()" name='total' type='number' [(ngModel)]="cartItem.total"> </td>
+                <td>{{ cartItem.product.price }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="six columns">
+              subtotal
+            </div>
+            <div class="six columns totalCost">
+              {{ shoppingCart.getTotalCost() }}
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

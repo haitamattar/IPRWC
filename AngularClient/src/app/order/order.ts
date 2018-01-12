@@ -6,8 +6,8 @@ export class Order {
   constructor(
     public id: number = null,
     public orderDateTime?: Date,
-    public user?: User,
-    public orderDetails?: OrderDetail[],
+    public user: User = new User(),
+    public ordersDetail: OrderDetail[] = []
   ) {
 
   }

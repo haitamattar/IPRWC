@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "Hind";
+    font-style: normal;
+    /* font-weight: 200; */
+    src: url(/assets/fonts/Hind-Light.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Hind";
+    font-style: normal;
+    font-weight: 400;
+    src: url(/assets/fonts/Hind-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Hind";
+    font-style: normal;
+    font-weight: 500;
+    src: url(/assets/fonts/Hind-Meduim.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Hind";
+    font-style: normal;
+    font-weight: 600;
+    src: url(/assets/fonts/Hind-SemiBold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "Hind";
+    font-style: normal;
+    font-weight: 700;
+    src: url(/assets/fonts/Hind-Bold.ttf) format("truetype");
+}

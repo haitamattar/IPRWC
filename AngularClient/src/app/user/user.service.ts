@@ -23,6 +23,10 @@ export class UserService {
     return this.api.post<User>('users', user);
   }
 
+  public update(user: User): Observable<User> {
+      return this.api.put<User>('users', user);
+  }
+
   public login(user: User) {
     this.authService.setAuthorization(user.email, user.password);
     return this.api.get<User>('users/me');

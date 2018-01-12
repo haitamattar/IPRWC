@@ -1,0 +1,20 @@
+<div class="container">
+  <h2> Order {{ order.id }}</h2>
+  <h6> Date: {{ order.orderDateTime | date: 'dd-MM-yyyy' }}</h6>
+  <table class="u-full-width">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of order.ordersDetail">
+        <td>{{ item.id }}</td>
+        <td>{{ item.product.name }}<br>{{ item.product.description }}</td>
+        <td>{{ item.productPrice }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

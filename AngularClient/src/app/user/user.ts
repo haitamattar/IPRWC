@@ -5,6 +5,8 @@ export class User {
     public password?: string,
     public fullName?: string,
     public postalcode?: string,
+    public city?: string,
+    public street?: string,
     public streetnumber?: number,
     public role: string = 'CUSTOMER'
     ) {

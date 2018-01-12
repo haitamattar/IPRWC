@@ -73,7 +73,6 @@ export class ShoppingCartService {
     return this.itemsInCartSubject;
   }
 
-
   public removeCurrentUser() {
       this.currentUser = null;
       this.shoppingCart.setUser(this.currentUser);
@@ -89,16 +88,19 @@ export class ShoppingCartService {
       data => {
         this.shoppingCart = new ShoppingCart(data.user, data.cartItems);
         this.itemsInCartSubject.next(this.shoppingCart);
-        this.setShoppingCartSession(this.shoppingCart);
       },
       error => {
         console.log('No data in shoppingCart');
       });
+      this.setShoppingCartSession(this.shoppingCart);
   }
 
 
   // Set Session cart data
   public setShoppingCartSession(shoppingCartItems: ShoppingCart) {
+    if (this.authService.hasAuthorization()) {
+        this.shoppingCart.setUser(this.authService.getAuthenticator());
+    }
     this.shoppingCart = shoppingCartItems;
     const shoppingCartString = JSON.stringify(shoppingCartItems);
     const storage = localStorage;
@@ -120,7 +122,7 @@ export class ShoppingCartService {
 
 
   public removeShoppingCartSession(): void {
-    this.shoppingCart = new ShoppingCart();
+    this.shoppingCart.setAllProducts([]);
     this.itemsInCartSubject.next(this.shoppingCart);
     localStorage.removeItem('shoppingCart');
   }

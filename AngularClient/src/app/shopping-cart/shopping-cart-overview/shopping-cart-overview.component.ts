@@ -4,7 +4,7 @@ import { ShoppingCart } from '../../shopping-cart/shopping-cart';
 import { Observable } from 'rxjs/Observable';
 import { AuthorizationService } from '../../shared/authorization.service';
 import { Router } from '@angular/router';
-
+import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-shopping-cart-overview',
@@ -14,15 +14,19 @@ import { Router } from '@angular/router';
 export class ShoppingCartOverviewComponent implements OnInit, OnDestroy {
   shoppingCart: ShoppingCart = new ShoppingCart();
   result: any = [];
-  dataSource;
-  uniqueData$;
-
+  // public shoppingCartItems$: Observable<ShoppingCart>;
+  public shoppingCartItems$: Observable<ShoppingCart> = of(new ShoppingCart);
+  // public shoppingCartItems: ShoppingCart[] = [];
 
   constructor(private shoppingCartService: ShoppingCartService, private authService: AuthorizationService,
-    private router: Router) { }
+    private router: Router) {
+
+        this.shoppingCartItems$ = this.shoppingCartService.getShoppingCartOb();
+        this.shoppingCartItems$.subscribe(data => this.shoppingCart = new ShoppingCart(data.user, data.cartItems));
+  }
 
   ngOnInit() {
-    this.shoppingCart = this.shoppingCartService.getShoppingCart();
+      console.log('func:', this.shoppingCart);
   }
 
   ngOnDestroy() {
@@ -40,13 +44,14 @@ export class ShoppingCartOverviewComponent implements OnInit, OnDestroy {
   }
 
   purchase() {
-    if (this.authService.getAuthenticator() == null ) {
-        this.router.navigate(['login']);
+    if (this.authService.getAuthenticator() == null) {
+      this.router.navigate(['login']);
+      return;
     }
 
     this.shoppingCartService.purchaseItems(this.shoppingCart).subscribe(
       data => {
-        this.router.navigate(['order', data]);
+        this.router.navigate(['user/order', data]);
         this.shoppingCartService.removeShoppingCartSession();
       },
       error => {

@@ -12,6 +12,8 @@ import {SharedModule} from './shared/shared.module';
 import { RoleGuardService } from './shared/role-guard.service';
 import { RoutesModule } from './routes.module';
 import { ProductModule } from './product/product.module';
+import { OrderModule } from './order/order.module';
+
 import { HomeModule } from './home/home.module';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
@@ -28,6 +30,7 @@ import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
     RoutesModule,
     ProductModule,
     HomeModule,
+    OrderModule,
     ShoppingCartModule
   ],
   exports: [

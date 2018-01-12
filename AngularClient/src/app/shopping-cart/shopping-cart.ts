@@ -38,7 +38,7 @@ export class ShoppingCart {
   getTotalCost(): number {
     let num = 0;
     for (const cartItem of this.cartItems) {
-      num += cartItem.product.price;
+      num += cartItem.product.price * cartItem.total;
     }
     return num;
   }

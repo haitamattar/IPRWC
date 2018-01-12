@@ -1,12 +1,13 @@
 <nav>
   <div class="navigation">
     <a routerLink="/">
-      <div class="logo"> WEBSHOP </div>
+      <div class="logo"> Goeings </div>
     </a>
     <ul class="menu" [ngSwitch]="authenticatorRole">
       <li *ngIf="!(isLoggedIn$ | async)"><a routerLink="/login">Login</a></li>
       <li><a routerLink="/products">Products</a></li>
-      <li><a routerLink="/admin">admin</a></li>
+      <li><a *ngIf="isLoggedIn$ | async" routerLink="/user/me">Your Account</a></li>
+      <!-- <li><a routerLink="/admin">admin</a></li> -->
       <li><a routerLink="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"> {{amountCart}}</i>
 </a></li>
       <!-- <li *ngSwitchCase="'FRANCHISER'"><a routerLink="/user" >Gebruikers</a></li> -->

@@ -15,11 +15,32 @@
         </div>
         <div class="six columns">
 
-          <label for="postalcodeInput">Postalcode</label>
-          <input [(ngModel)]="user.postalcode" name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
+          <div class="row">
+            <div class="four columns">
+              <label for="postalcodeInput">Postalcode</label>
+              <input [(ngModel)]="user.postalcode" name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
+            </div>
+            <div class="eight columns">
+                <label for="cityInput">City</label>
+                <input [(ngModel)]="user.city" name="city" required class="u-full-width" type="text" placeholder="city" id="cityInput">
+            </div>
+          </div>
 
-          <label for="streetnumberInput">Streetnumber</label>
-          <input [(ngModel)]="user.streetnumber" name="streetnumber" required class="u-full-width" type="text" placeholder="streetnumber" id="streetnumberInput">
+
+
+          <label for="streetnumberInput">Street and streetnumber</label>
+          <div class="row">
+            <div class="nine columns">
+              <input [(ngModel)]="user.street" name="street" required class="u-full-width" type="text" placeholder="street" id="streetInput">
+            </div>
+            <div class="three columns">
+              <input [(ngModel)]="user.streetnumber" name="streetnumber" required class="u-full-width" type="text" placeholder="number" id="streetnumberInput">
+            </div>
+          </div>
+          <label>Country</label>
+          <input name="country" disabled class="u-full-width" type="text" value='The Netherlands' id="streetnumberInput">
+
+
         </div>
       </div>
       <input class="button-primary" type="submit" value="Submit">

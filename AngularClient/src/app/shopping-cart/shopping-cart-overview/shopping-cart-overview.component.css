@@ -3,6 +3,32 @@ hr{
     margin-bottom: 10px;
 }
 
-h6{
+h5{
     margin-bottom: 10px;
+    display: inline-block;
+}
+
+.totalCost{
+    text-align: right;
+    padding-right: 20px;
+}
+
+ol{
+    list-style: none;
+}
+
+ol li{
+    margin-bottom: 2px;
+}
+
+#creditcard{
+    background: url(/assets/images/Visa.svg) no-repeat right 10px center;
+    background-size: 40px;
+}
+
+.small{
+    padding-left: 10px;
+    font-size: 10pt;
+    color: #666666;
+    display: inline;
 }

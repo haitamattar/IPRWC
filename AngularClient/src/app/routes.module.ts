@@ -13,7 +13,7 @@ import { CreateProductComponent } from './product/create-product/create-product.
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
 // ShoppingCart
 import { ShoppingCartOverviewComponent } from './shopping-cart/shopping-cart-overview/shopping-cart-overview.component';
-
+import { OrderDetailComponent } from './order/order-detail/order-detail.component';
 
 import { AuthGuard } from './shared/auth-guard.service';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
@@ -36,10 +36,8 @@ export const routes: Routes =
         canActivate: [AuthGuard, RoleGuardService],
         data: { allowedRole: 'CUSTOMER' },
         children: [
-            {
-                        path: 'me',
-                        component: UserDetailComponent
-                    },
+            { path: 'me', component: UserDetailComponent },
+            { path: 'order/:id', component: OrderDetailComponent }
         ]
     },
     // public routes

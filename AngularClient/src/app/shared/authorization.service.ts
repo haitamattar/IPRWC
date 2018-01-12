@@ -86,8 +86,6 @@ export class AuthorizationService {
   }
 
   public getAuthenticator(): User {
-    // console.log(this.authenticator.achternaam)
-    // console.log(this.authenticator.voornaam);
     return this.authenticator;
   }
 

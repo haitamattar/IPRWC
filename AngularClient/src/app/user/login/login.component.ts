@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
   login() {this.userService.login(this.user).subscribe(
       data => {
         this.userService.storeAuth(data, false);
-        this.shoppingCartService.retrieveAllDataFromDatabase();
         this.userService.goHome();
+        this.shoppingCartService.retrieveAllDataFromDatabase();
       },
       error => {
         console.log('Error');
