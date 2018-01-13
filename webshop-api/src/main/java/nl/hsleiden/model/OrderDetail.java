@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class OrderDetail {
 
-    @NotEmpty
     @JsonView(View.Public.class)
     private long id = 0;
 

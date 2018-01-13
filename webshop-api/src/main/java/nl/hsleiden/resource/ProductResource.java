@@ -58,7 +58,7 @@ public class ProductResource {
     @RolesAllowed({"ADMIN"})
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Public.class)
-    public Product createUserAdmin(Product product)
+    public Product createProduct(Product product)
     {
         product = service.insertProduct(product);
         return product;

@@ -19,14 +19,19 @@ public class UserDAO {
     final String FIND_BY_EMAIL = "SELECT * FROM `user` WHERE `email` = ?;";
 
     final String INSERT_USER = "INSERT INTO `user` (`email`, `password`, `fullname`, " +
-                               " `postalcode`, `streetnumber`, `role`) " +
-                               "VALUES (?, ?, ?, ?, ?, ?);";
+                               " `postalcode`, `city`, `street`, `streetnumber`, `role`) " +
+                               "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
+    // Delete only customers
     final String DELETE_USER = "DELETE " +
                                "FROM `user` " +
+                               "WHERE `id` = ? AND `role` = 'CUSTOMER';";
+
+
+    final String UPDATE_USER = "UPDATE `user` " +
+                               "SET `email` = ?, `password` = ?, `fullname` = ?, `postalcode` = ?, `city` = ?," +
+                               " `street` = ?, `streetnumber` = ? " +
                                "WHERE `id` = ?;";
-
-
     // insert user
     public User insert(User user) throws SQLException {
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()){
@@ -37,8 +42,10 @@ public class UserDAO {
             insert_user_ps.setString(2, user.getPassword());
             insert_user_ps.setString(3, user.getFullName());
             insert_user_ps.setString(4, user.getPostalcode());
-            insert_user_ps.setString(5, user.getStreetnumber());
-            insert_user_ps.setString(6, user.getRole());
+            insert_user_ps.setString(5, user.getCity());
+            insert_user_ps.setString(6, user.getStreet());
+            insert_user_ps.setString(7, user.getStreetnumber());
+            insert_user_ps.setString(8, user.getRole());
 
             insert_user_ps.execute();
 
@@ -56,6 +63,28 @@ public class UserDAO {
             connection.close();
             return user;
         }
+    }
+
+
+    public boolean update(User user) throws SQLException {
+        try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
+            PreparedStatement update_ps = connection.prepareStatement(UPDATE_USER);
+
+            update_ps.setString(1, user.getEmail());
+            update_ps.setString(2, user.getPassword());
+            update_ps.setString(3, user.getFullName());
+            update_ps.setString(4, user.getPostalcode());
+            update_ps.setString(5, user.getCity());
+            update_ps.setString(6, user.getStreet());
+            update_ps.setString(7, user.getStreetnumber());
+            update_ps.setLong(8, user.getId());
+
+            update_ps.execute();
+
+            update_ps.close();
+            return true;
+        }
+
     }
 
     // Get all users
@@ -120,10 +149,10 @@ public class UserDAO {
     }
 
     // Delete user
-    public boolean deleteUser(User user) throws SQLException{
+    public boolean deleteUser(Long id) throws SQLException{
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
             PreparedStatement pstmt = connection.prepareStatement(DELETE_USER);
-            pstmt.setLong(1, user.getId());
+            pstmt.setLong(1, id);
 
             int rowsAffected = pstmt.executeUpdate();
 
@@ -142,6 +171,8 @@ public class UserDAO {
                 rset.getString("password"),
                 rset.getString("fullname"),
                 rset.getString("postalcode"),
+                rset.getString("city"),
+                rset.getString("street"),
                 rset.getString("streetnumber"),
                 rset.getString("role"));
         return user;

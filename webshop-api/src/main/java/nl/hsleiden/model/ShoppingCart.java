@@ -8,11 +8,10 @@ import java.util.List;
 
 public class ShoppingCart {
 
-    @NotEmpty
+
     @JsonView(View.Public.class)
     private User user;
 
-    @NotEmpty
     @JsonView(View.Public.class)
     private List<CartItem> cartItems;
 

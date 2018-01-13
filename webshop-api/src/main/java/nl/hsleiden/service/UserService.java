@@ -30,8 +30,22 @@ public class UserService extends BaseService<User>
         return null;
     }
 
-    public User getById(long id) throws SQLException {
-        return requireResult(userDAO.findById(id));
+    public User getById(long id) {
+        try {
+            return requireResult(userDAO.findById(id));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Boolean update(User user) {
+        try {
+            return userDAO.update(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -44,8 +58,8 @@ public class UserService extends BaseService<User>
         return null;
     }
 
-    public boolean deleteUser(User user) throws SQLException {
-        return userDAO.deleteUser(user);
+    public boolean deleteUser(Long id) throws SQLException {
+        return userDAO.deleteUser(id);
     }
 
 

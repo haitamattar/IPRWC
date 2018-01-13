@@ -75,7 +75,7 @@ public class ProductDAO {
         try (Connection connection = MysqlDbAccess.getDatabase().openConnection()) {
             PreparedStatement insert_image_ps = connection.prepareStatement(INSERT_IMAGE, PreparedStatement.RETURN_GENERATED_KEYS);
 
-            insert_image_ps.setBytes(1, product.getImage());
+            insert_image_ps.setString(1, product.getImage());
             insert_image_ps.setDouble(2, product.getId());
 
             insert_image_ps.execute();
@@ -154,7 +154,7 @@ public class ProductDAO {
                 rset.getString("product_description"),
                 category,
                 rset.getDouble("product_price"),
-                rset.getBytes("blob"));
+                rset.getString("blob"));
         return product;
     }
 

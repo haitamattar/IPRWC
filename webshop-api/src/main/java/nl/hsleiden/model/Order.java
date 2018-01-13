@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Order {
 
-    @NotEmpty
     @JsonView(View.Public.class)
     private long id = 0;
 

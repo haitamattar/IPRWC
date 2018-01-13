@@ -1,7 +1,15 @@
 package nl.hsleiden.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import nl.hsleiden.View;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class CartItem {
+
+    @JsonView(View.Public.class)
     private Product product;
+
+    @JsonView(View.Public.class)
     private int total = 1;
 
     public CartItem() {

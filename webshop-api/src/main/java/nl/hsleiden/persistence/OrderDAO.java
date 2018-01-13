@@ -228,6 +228,8 @@ public class OrderDAO {
                 rset.getString("email"),
                 rset.getString("fullname"),
                 rset.getString("postalcode"),
+                rset.getString("city"),
+                rset.getString("street"),
                 rset.getString("streetnumber"),
                 rset.getString("role"));
 

@@ -12,7 +12,6 @@ import java.security.Principal;
 
 public class User implements Principal {
 
-    @NotEmpty
     @JsonView(View.Public.class)
     private long id = 0;
 
@@ -32,9 +31,19 @@ public class User implements Principal {
     private String fullName;
 
     @NotEmpty
-    @Length(min = 6, max = 7)
+    @Length(min = 6, max = 6)
     @JsonView(View.Public.class)
     private String postalcode;
+
+    @NotEmpty
+    @Length(min = 3, max = 100)
+    @JsonView(View.Public.class)
+    private String city;
+
+    @NotEmpty
+    @Length(min = 4, max = 100)
+    @JsonView(View.Public.class)
+    private String street;
 
     @NotEmpty
     @Length(min = 1, max = 10)
@@ -49,21 +58,25 @@ public class User implements Principal {
     }
 
 
-    public User(Long id, String email, String fullName, String postalcode, String streetnumber, String role) {
+    public User(Long id, String email, String fullName, String postalcode, String city, String street, String streetnumber, String role) {
         this.id = id;
         this.email = email;
         this.fullName = fullName;
         this.postalcode = postalcode;
+        this.city = city;
+        this.street = street;
         this.streetnumber = streetnumber;
         this.role = role;
     }
 
-    public User(long id, String email, String password, String fullName, String postalcode, String streetnumber, String role) {
+    public User(long id, String email, String password, String fullName, String postalcode, String city, String street, String streetnumber, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.fullName = fullName;
         this.postalcode = postalcode;
+        this.city = city;
+        this.street = street;
         this.streetnumber = streetnumber;
         this.role = role;
     }
@@ -124,10 +137,25 @@ public class User implements Principal {
         this.role = role;
     }
 
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
     public boolean equals(User user)
     {
         return email.equals(user.getEmail());
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override

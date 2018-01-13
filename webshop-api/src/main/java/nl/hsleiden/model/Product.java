@@ -11,7 +11,6 @@ import java.awt.*;
 
 public class Product {
 
-    @NotEmpty
     @JsonView(View.Public.class)
     private long id = 0;
 
@@ -34,7 +33,7 @@ public class Product {
     private double price;
 
     @JsonView(View.Public.class)
-    private byte[] image;
+    private String image;
 
 
     public Product() {
@@ -49,7 +48,7 @@ public class Product {
         this.price = price;
     }
 
-    public Product(long id, String name, String description, Category category, double price, byte[] image) {
+    public Product(long id, String name, String description, Category category, double price, String image) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -99,11 +98,11 @@ public class Product {
         this.price = price;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

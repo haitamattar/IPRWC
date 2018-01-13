@@ -140,7 +140,6 @@ public class ShoppingCartDAO {
 
             pstmt.close();
             connection.close();
-            System.out.println("GOEIEEE");
             return rowsAffected > 0;
         }
     }

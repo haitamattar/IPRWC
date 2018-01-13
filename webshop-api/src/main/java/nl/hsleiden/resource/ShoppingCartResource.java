@@ -12,6 +12,7 @@ import nl.hsleiden.service.ShoppingCartService;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
@@ -44,7 +45,7 @@ public class ShoppingCartResource {
     @RolesAllowed({"CUSTOMER"})
     @Consumes(MediaType.APPLICATION_JSON)
     @JsonView(View.Public.class)
-    public boolean addItemToShoppingCart(CartItem cartItem, @Auth User user)
+    public boolean addItemToShoppingCart(@Valid CartItem cartItem, @Auth User user)
     {
         return service.insertShoppingCartProduct(cartItem, user);
     }
