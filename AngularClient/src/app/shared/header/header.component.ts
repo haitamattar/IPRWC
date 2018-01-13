@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   public amountCart: number;
   public authenticatorRole: string;
 
-  private isLoggedIn$: Observable<boolean>;
+  public isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthorizationService, private shoppingCartService: ShoppingCartService,
     private router: Router) {

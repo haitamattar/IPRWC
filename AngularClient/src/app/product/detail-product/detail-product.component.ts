@@ -12,7 +12,7 @@ import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
 })
 export class DetailProductComponent implements OnInit {
   public product: Product = null;
-  private isDataAvailable: Boolean = false;
+  public isDataAvailable: Boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private productService: ProductService,
     private authService: AuthorizationService, private shoppingCartService: ShoppingCartService) {
