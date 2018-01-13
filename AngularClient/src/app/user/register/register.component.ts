@@ -23,15 +23,13 @@ export class RegisterComponent implements OnInit {
   }
 
   public createUser(user: User) {
-    console.log('CREATE CLIENT', user);
     this.userService.create(user).subscribe(
       data => {
         user = data;
-        console.log('Client insert:', user);
         this.login();
       },
       error => {
-        console.log('ERORR');
+        console.log('Error');
       }
     );
   }
@@ -44,7 +42,7 @@ export class RegisterComponent implements OnInit {
         this.userService.goHome();
       },
       error => {
-        console.log('probleem');
+        console.log('Error');
       }
     );
   }

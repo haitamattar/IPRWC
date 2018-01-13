@@ -24,7 +24,6 @@ export class UserOverviewComponent implements OnInit {
   }
 
   removeUser(user: User) {
-      console.log('removeUser');
     this.userService.delete(user).subscribe(
       users => {
           this.getAllUsers();

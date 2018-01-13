@@ -26,7 +26,6 @@ export class UserDetailComponent implements OnInit {
   }
 
   editUser(user: User) {
-    console.log('edit user');
     this.userService.update(this.user).subscribe(
       data => {
         user = data;

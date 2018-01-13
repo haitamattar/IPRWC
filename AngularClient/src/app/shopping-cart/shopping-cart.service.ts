@@ -137,7 +137,6 @@ export class ShoppingCartService {
   }
 
   public updateShoppingCartInDatabase(shoppingCart: ShoppingCart): Observable<ShoppingCart> {
-    console.log('TESTOE A NEEF');
     return this.api.put<ShoppingCart>('shoppingCart', shoppingCart);
   }
 

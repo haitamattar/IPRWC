@@ -27,10 +27,8 @@ export class OrderDetailComponent implements OnInit {
       .subscribe(
       order => {
         this.order = order;
-        console.log('this Order: ', this.order);
-
       },
-      error => { console.log('PRONNNE'); }
+      error => { console.log('Error'); }
       );
 
   }

@@ -26,7 +26,6 @@ export class OrderOverviewComponent implements OnInit {
   }
 
   getAllOrderByUser() {
-    console.log('this Order: ', this.orders[1]);
     this.orderService.getAllByUser().subscribe(
       orders => {
         // Cast data to object
