@@ -1,28 +1,73 @@
 <div class="container">
   <div class="registerForm">
+    <h3>Register</h3>
+    <hr>
     <form autocomplete="off" #createUserForm='ngForm' class="" (ngSubmit)="createUser(user);">
       <div class="row">
         <div class="six columns">
 
           <label for="emailInput">Email</label>
-          <input [(ngModel)]="user.email" name="email" required class="u-full-width" type="email" placeholder="example@mailbox.com" id="emailInput">
+          <input #email="ngModel" [(ngModel)]="user.email" name="email" required class="u-full-width" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}" type="email" placeholder="example@mailbox.com" id="emailInput">
+          <div *ngIf="email.invalid && (email.dirty && email.touched)" class="alert alert-danger">
+            <p class="error" *ngIf="email.errors.required">
+              Email is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
 
-          <label for="nameInput">Fullname</label>
-          <input [(ngModel)]="user.fullName" name="fullName" required class="u-full-width" type="text" placeholder="full name" id="fullnameInput">
+            </p>
+            <p class="error" *ngIf="email.errors.pattern">
+              Not a valid email <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+          </div>
+
+          <label for="nameInput">Full name</label>
+          <input #fullName="ngModel" [(ngModel)]="user.fullName" name="fullName" required class="u-full-width" minlength="4" type="text" placeholder="full name" id="fullnameInput">
+          <div *ngIf="fullName.invalid && (fullName.dirty && fullName.touched)" class="alert alert-danger">
+            <p class="error" *ngIf="fullName.errors.required">
+              Full name is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+            <p class="error" *ngIf="fullName.errors.minlength">
+              Full name needs to be more than 4 characters <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+          </div>
 
           <label for="passwordInput">Password</label>
-          <input [(ngModel)]="user.password" name="password" required class="u-full-width" type="password" placeholder="password" id="passwordInput">
+          <input #password="ngModel" [(ngModel)]="user.password" name="password" required class="u-full-width" type="password" minlength="8" placeholder="password" id="passwordInput">
+          <div *ngIf="password.invalid && (password.dirty && password.touched)" class="alert alert-danger">
+
+            <p class="error" *ngIf="password.errors.required">
+              Password is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+            <p class="error" *ngIf="password.errors.minlength">
+              Password needs to be more than 8 characters <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+          </div>
         </div>
         <div class="six columns">
 
           <div class="row">
             <div class="four columns">
               <label for="postalcodeInput">Postalcode</label>
-              <input [(ngModel)]="user.postalcode" name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
+              <input  #postalcode="ngModel" minlength="6" maxlength="6" [(ngModel)]="user.postalcode" name="postalcode" required class="u-full-width" type="text" placeholder="postalcode" id="postalcodeInput">
             </div>
             <div class="eight columns">
-                <label for="cityInput">City</label>
-                <input [(ngModel)]="user.city" name="city" required class="u-full-width" type="text" placeholder="city" id="cityInput">
+              <label for="cityInput">City</label>
+              <input #city="ngModel" minlength="2" [(ngModel)]="user.city" name="city" required class="u-full-width" type="text" placeholder="city" id="cityInput">
+            </div>
+            <div *ngIf="postalcode.invalid && (postalcode.dirty && postalcode.touched)" class="alert alert-danger">
+              <p class="error" *ngIf="postalcode.errors.required">
+                Postalcode is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+              </p>
+              <p class="error" *ngIf="postalcode.errors.minlength || postalcode.errors.maxlength">
+                Postalcode max and min character length is 6 <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+              </p>
+            </div>
+
+            <div *ngIf="city.invalid && (city.dirty && city.touched)" class="alert alert-danger">
+              <p class="error" *ngIf="city.errors.required">
+                City is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+              </p>
+              <p class="error" *ngIf="city.errors.minlength">
+                City needs to be longer than 2 characters <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+              </p>
             </div>
           </div>
 
@@ -31,19 +76,32 @@
           <label for="streetnumberInput">Street and streetnumber</label>
           <div class="row">
             <div class="nine columns">
-              <input [(ngModel)]="user.street" name="street" required class="u-full-width" type="text" placeholder="street" id="streetInput">
+              <input #street="ngModel" [(ngModel)]="user.street" minlength="8" name="street" required class="u-full-width" type="text" placeholder="street" id="streetInput">
             </div>
             <div class="three columns">
-              <input [(ngModel)]="user.streetnumber" name="streetnumber" required class="u-full-width" type="text" placeholder="number" id="streetnumberInput">
+              <input #streetNumber="ngModel"  [(ngModel)]="user.streetnumber" name="streetnumber"  required class="u-full-width" type="number" placeholder="number" id="streetnumberInput">
             </div>
           </div>
+          <div *ngIf="street.invalid && (street.dirty && street.touched)" class="alert alert-danger">
+            <p class="error" *ngIf="street.errors.required">
+              Street is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+            <p class="error" *ngIf="street.errors.minlength">
+              Street needs to be longer than 8 characters <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+          </div>
+          <div *ngIf="streetNumber.invalid && (streetNumber.dirty && streetNumber.touched)" class="alert alert-danger">
+            <p class="error" *ngIf="streetNumber.errors.required">
+              Street number is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+            </p>
+          </div>
           <label>Country</label>
-          <input name="country" disabled class="u-full-width" type="text" value='The Netherlands' id="streetnumberInput">
+          <input name="country" disabled class="u-full-width" type="text" value='The Netherlands' id="countryInput">
 
 
         </div>
       </div>
-      <input class="button-primary" type="submit" value="Submit">
+      <input [disabled]="!createUserForm.valid" class="button-primary" type="submit" value="Register">
     </form>
   </div>
 </div>

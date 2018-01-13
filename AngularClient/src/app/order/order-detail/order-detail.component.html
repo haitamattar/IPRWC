@@ -13,7 +13,7 @@
       <tr *ngFor="let item of order.ordersDetail">
         <td>{{ item.id }}</td>
         <td>{{ item.product.name }}<br>{{ item.product.description }}</td>
-        <td>{{ item.productPrice }}</td>
+        <td>&euro;{{ item.productPrice }}</td>
       </tr>
     </tbody>
   </table>

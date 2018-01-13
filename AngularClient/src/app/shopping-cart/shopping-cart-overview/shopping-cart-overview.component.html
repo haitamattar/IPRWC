@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="registerForm">
+  <div *ngIf="!(isLoading$ | async); else loading" class="registerForm">
     <h1>Checkout</h1>
     <div class="row">
       <div class="six columns">
@@ -21,7 +21,7 @@
 
           <label>Creditcard</label>
           <input name="creditcard" required class="u-full-width" type="text" placeholder="creditcard number" id="creditcard">
-          <input class="button-primary u-full-width" type="submit" value="Purchase">
+          <input class="button-primary u-full-width purchase" type="submit" value="Purchase">
         </form>
 
         <ng-template #buy_some_stuff>
@@ -33,12 +33,14 @@
       </div>
 
       <div class="six columns">
-        <h5>Your order</h5> <p *ngIf="shoppingCart.cartItems.length > 0;" class="small">edit your shopping cart</p>
+        <h5>Your order</h5>
+        <p *ngIf="shoppingCart.cartItems.length > 0;" class="small">edit your shopping cart</p>
         <hr>
         <div *ngIf=" shoppingCart.cartItems.length > 0;">
           <table class="u-full-width">
             <thead>
               <tr>
+                <th></th>
                 <th>Product</th>
                 <th>Amount</th>
                 <th>Price</th>
@@ -46,9 +48,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let cartItem of shoppingCart.cartItems">
-                <td>{{ cartItem.product.name }}<br> {{ cartItem.product.description }}</td>
-                <td><input min="1" (ngModelChange)="editCart()" name='total' type='number' [(ngModel)]="cartItem.total"> </td>
-                <td>{{ cartItem.product.price }}</td>
+                <td> <img [src]="cartItem.product.image" width="100" alt=""> </td>
+                <td>{{ cartItem.product.name }}
+                  <p class="productDescription"> {{ cartItem.product.description }} </p>
+                </td>
+                <td><input min="1" class="amountInput" (ngModelChange)="editCart()" name='total' type='number' [(ngModel)]="cartItem.total"> </td>
+                <td>&euro;{{ cartItem.product.price }}</td>
               </tr>
             </tbody>
           </table>
@@ -57,11 +62,15 @@
               subtotal
             </div>
             <div class="six columns totalCost">
-              {{ shoppingCart.getTotalCost() }}
+              &euro;{{ shoppingCart.getTotalCost() | number : '1.2-2' }}
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
+  <ng-template #loading>
+    <h6>Loading</h6>
+  </ng-template>
+
+</div>

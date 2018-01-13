@@ -1,6 +1,15 @@
 <div class="container">
   <div class="registerForm">
-    <h1>User: {{ user.fullName }}</h1>
+    <h1>{{ user.fullName }}</h1>
+    <div class="row">
+      <div class="six columns">
+        <button routerLink="/user/me" type="button" class="button-primary u-full-width"  name="button">User details</button>
+      </div>
+      <div class="six columns">
+        <button routerLink="/user/orders" class="button-primary u-full-width"  type="button" name="button">Order history</button>
+      </div>
+    </div>
+    <hr>
     <form autocomplete="off" #createUserForm='ngForm' class="" (ngSubmit)="editUser(user);">
       <div class="row">
         <div class="six columns">
@@ -39,12 +48,12 @@
             </div>
           </div>
           <label>Country</label>
-          <input name="country" disabled class="u-full-width" type="text" value='The Netherlands' id="streetnumberInput">
+          <input name="country" disabled class="u-full-width" type="text" value='The Netherlands' id="countryInput">
 
 
         </div>
       </div>
-      <input class="button-primary" type="submit" value="Submit">
+      <input class="button-primary" type="submit" value="Change information">
     </form>
   </div>
 </div>

@@ -15,13 +15,12 @@ export class HeaderComponent implements OnInit {
 
   public shoppingCartItems$: Observable<ShoppingCart>;
   public amountCart: number;
-
+  public authenticatorRole: string;
 
   private isLoggedIn$: Observable<boolean>;
 
   constructor(private authService: AuthorizationService, private shoppingCartService: ShoppingCartService,
     private router: Router) {
-
   }
 
   ngOnInit() {
@@ -32,11 +31,22 @@ export class HeaderComponent implements OnInit {
       data => {
         this.amountCart = new ShoppingCart(data.user, data.cartItems).getAmountOfCartItems();
       },
-      _ => { console.log('goeie'); this.amountCart = 0; });
+      _ => { this.amountCart = 0; });
+
+      if (this.authService.hasAuthorization()) {
+          this.authenticatorRole = this.authService.getAuthenticator().role;
+      }
+
+      this.authService.authenticator$.subscribe(
+            authenticator => {
+                this.authenticatorRole = authenticator.role;
+            }
+        );
   }
 
   public logout() {
     this.shoppingCartService.removeShoppingCartSession();
+    this.authenticatorRole = '';
     this.authService.deleteAuthorization();
     this.shoppingCartItems$.subscribe(_ => _);
     this.shoppingCartService.removeCurrentUser();

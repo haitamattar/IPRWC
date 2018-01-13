@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
 import { ShoppingCart } from '../../shopping-cart/shopping-cart';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AuthorizationService } from '../../shared/authorization.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs/observable/of';
@@ -12,8 +13,11 @@ import { of } from 'rxjs/observable/of';
   styleUrls: ['./shopping-cart-overview.component.css']
 })
 export class ShoppingCartOverviewComponent implements OnInit, OnDestroy {
+
   shoppingCart: ShoppingCart = new ShoppingCart();
   result: any = [];
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   // public shoppingCartItems$: Observable<ShoppingCart>;
   public shoppingCartItems$: Observable<ShoppingCart> = of(new ShoppingCart);
   // public shoppingCartItems: ShoppingCart[] = [];
@@ -21,12 +25,12 @@ export class ShoppingCartOverviewComponent implements OnInit, OnDestroy {
   constructor(private shoppingCartService: ShoppingCartService, private authService: AuthorizationService,
     private router: Router) {
 
-        this.shoppingCartItems$ = this.shoppingCartService.getShoppingCartOb();
-        this.shoppingCartItems$.subscribe(data => this.shoppingCart = new ShoppingCart(data.user, data.cartItems));
+    this.shoppingCartItems$ = this.shoppingCartService.getShoppingCartOb();
+    this.shoppingCartItems$.subscribe(data => this.shoppingCart = new ShoppingCart(data.user, data.cartItems));
   }
 
   ngOnInit() {
-      console.log('func:', this.shoppingCart);
+
   }
 
   ngOnDestroy() {
@@ -51,12 +55,15 @@ export class ShoppingCartOverviewComponent implements OnInit, OnDestroy {
 
     this.shoppingCartService.purchaseItems(this.shoppingCart).subscribe(
       data => {
+        this.isLoading$.next(true);
         this.router.navigate(['user/order', data]);
         this.shoppingCartService.removeShoppingCartSession();
       },
       error => {
         console.log('error');
-      });
+      },
+      () => { this.isLoading$.next(false); }
+    );
   }
 
 

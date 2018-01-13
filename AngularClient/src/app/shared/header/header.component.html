@@ -1,18 +1,26 @@
 <nav>
   <div class="navigation">
     <a routerLink="/">
-      <div class="logo"> Goeings </div>
+      <div class="logo">
+        <h5>Goeings</h5>
+      </div>
     </a>
+    <ul class="menu categories">
+      <li><a routerLink="/products">All products</a></li>
+      <li><a routerLink="/products/Games">Games</a></li>
+      <li><a routerLink="/products/Synths">Synths</a></li>
+      <li><a routerLink="/products/Cars">Cars</a></li>
+      <li><a routerLink="/products/Clothing">Clothing</a></li>
+    </ul>
+
     <ul class="menu" [ngSwitch]="authenticatorRole">
       <li *ngIf="!(isLoggedIn$ | async)"><a routerLink="/login">Login</a></li>
-      <li><a routerLink="/products">Products</a></li>
-      <li><a *ngIf="isLoggedIn$ | async" routerLink="/user/me">Your Account</a></li>
-      <!-- <li><a routerLink="/admin">admin</a></li> -->
-      <li><a routerLink="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"> {{amountCart}}</i>
-</a></li>
-      <!-- <li *ngSwitchCase="'FRANCHISER'"><a routerLink="/user" >Gebruikers</a></li> -->
-      <!-- <li><a routerLink="/wistjedat" >Wist je dat</a></li> -->
-      <li><a *ngIf="isLoggedIn$ | async" routerLink="/" (click)="logout()">Uitloggen</a></li>
+      <li><a *ngSwitchCase="'CUSTOMER'" routerLink="/user/me">Your Account</a></li>
+      <li><a *ngSwitchCase="'ADMIN'" routerLink="/admin/allUsers">Admin</a></li>
+      <li>
+        <a routerLink="/shoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true"> {{amountCart}}</i></a>
+      </li>
+      <li><a *ngIf="isLoggedIn$ | async" routerLink="/" (click)="logout()">Logout</a></li>
     </ul>
   </div>
 </nav>

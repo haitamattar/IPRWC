@@ -7,12 +7,15 @@ import { RouterModule } from '@angular/router';
 import { ProductsComponent } from './products/products.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { DetailProductComponent } from './detail-product/detail-product.component';
+import { PublicModule } from '../public.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    PublicModule
   ],
   declarations: [ProductsComponent, CreateProductComponent, DetailProductComponent],
   providers: [ProductService, ShoppingCartService]

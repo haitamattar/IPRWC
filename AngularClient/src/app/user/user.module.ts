@@ -5,6 +5,7 @@ import { PublicModule } from '../public.module';
 import { UserService } from './user.service';
 import { RegisterComponent } from './register/register.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserOverviewComponent } from './user-overview/user-overview.component';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
     CommonModule
   ],
   exports: [ LoginComponent ],
-  declarations: [LoginComponent, RegisterComponent, UserDetailComponent],
+  declarations: [LoginComponent, RegisterComponent, UserDetailComponent, UserOverviewComponent],
   providers: [ UserService ]
 })
 export class UserModule { }

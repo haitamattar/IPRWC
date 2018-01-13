@@ -1,3 +1,41 @@
-<p>
-  create-product works!
-</p>
+<div class="container">
+  <div class="settings">
+    <h2>Create product</h2>
+    <div class="row">
+      <div class="six columns">
+        <button routerLink="/admin/allUsers" type="button" class="button-primary u-full-width" name="button">All users</button>
+      </div>
+      <div class="six columns">
+        <button routerLink="/admin/createProduct" class="button-primary u-full-width" type="button" name="button">Create product</button>
+      </div>
+    </div>
+    <hr>
+    <form autocomplete="off" #createProductForm='ngForm' class="" (ngSubmit)="createProduct(product);">
+
+      <div class="row">
+        <div class="six columns">
+
+          <label for="nameInput">Name</label>
+          <input [(ngModel)]="product.name" name="name" required class="u-full-width" type="text" placeholder="name" id="nameInput">
+
+          <label for="descriptionInput">Description</label>
+          <input [(ngModel)]="product.description" name="description" required class="u-full-width" type="text" placeholder="description" id="descriptionInput">
+        </div>
+        <div class="six columns">
+          <label for="priceInput">Price</label>
+          <input [(ngModel)]="product.price" name="price" required class="u-full-width" type="number" step="0.01" min="0.01" max="2000" placeholder="price" id="priceInput">
+
+          <label for="categoryInput">Category</label>
+          <select [(ngModel)]="product.category.id" placeholder='cat' required class="u-full-width" id="category.id" name="category.id">
+                    <option [ngValue]="undefined" disabled selected> Select a category</option>
+                    <option value="1">Games</option>
+                    <option value="2">Synths</option>
+                    <option value="3">Clothing</option>
+                    <option value="4">Cars</option>
+            </select>
+        </div>
+      </div>
+      <input class="button-primary" type="submit" value="Create product">
+    </form>
+  </div>
+</div>

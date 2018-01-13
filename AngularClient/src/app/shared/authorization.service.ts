@@ -10,6 +10,7 @@ export class AuthorizationService {
   private password: string = null;
   private authenticator: User = null;
   public authorized$ = new BehaviorSubject<boolean>(false);
+  public authenticator$ = new Subject<any>();
 
   // store the URL so we can redirect after logging in
   public redirectUrl: string;
@@ -49,6 +50,11 @@ export class AuthorizationService {
 
     storage.setItem('authorization', authorizationString);
 
+    this.authenticator$.next({
+      authorized: true,
+      role: this.authenticator.role
+    });
+
     this.authorized$.next(true);
   }
 
@@ -66,6 +72,11 @@ export class AuthorizationService {
       this.password = authorization['password'];
       this.authenticator = authorization['authenticator'];
 
+      this.authenticator$.next({
+        authorized: true,
+        role: this.authenticator.role
+      });
+
       this.authorized$.next(true);
     }
   }
@@ -77,6 +88,11 @@ export class AuthorizationService {
 
     sessionStorage.removeItem('authorization');
     localStorage.removeItem('authorization');
+
+    this.authenticator$.next({
+      authorized: true,
+      role: null
+    });
 
     this.authorized$.next(false);
   }

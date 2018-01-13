@@ -1,0 +1,15 @@
+.removeBtn{
+    background-color: rgb(232, 41, 69);
+    color: white;
+    border: none;
+}
+
+.removeBtn:hover{
+    background-color: rgb(208, 31, 57);
+}
+
+.settings{
+    margin-top: 50px;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+}

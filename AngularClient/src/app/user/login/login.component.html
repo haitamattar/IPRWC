@@ -1,10 +1,39 @@
 <div class="container">
-        <h1>Login</h1>
-        <form #loginForm="ngForm" (ngSubmit)="login()">
-          <label for="username">Gebruikersnaam</label>
-          <input type="text" class="form-control" id="username" required [(ngModel)]="user.email" name="Gebruikernaam" placeholder="Voer gebruikersnaam in">
-          <label for="password">Wachtwoord</label>
-          <input type="password" class="form-control" id="password" required [(ngModel)]="user.password" name="Wachtwoord" placeholder="Voer wachtwoord in">
-          <button type="submit" class="button-primary">Login</button>
-        </form>
+  <div class="row register">
+    <div class="six columns">
+      <h5>Login</h5>
+      <form #loginForm="ngForm" (ngSubmit)="login()">
+
+        <label for="email">Email</label>
+        <input #email="ngModel" type="text" class="form-control u-full-width" id="email" required pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}" [(ngModel)]="user.email" name="email" placeholder="Email">
+        <div *ngIf="email.invalid && (email.dirty && email.touched)" class="alert alert-danger">
+
+          <p class="error" *ngIf="email.errors.required">
+            Email is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+
+          </p>
+          <p class="error" *ngIf="email.errors.pattern">
+            Not a valid email <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+          </p>
+        </div>
+
+        <label for="password">Password</label>
+        <input #password="ngModel" type="password" class="form-control u-full-width" id="password" required [(ngModel)]="user.password" name="password" placeholder="Password" >
+        <div *ngIf="password.invalid && (password.dirty && password.touched)" class="alert alert-danger">
+
+          <p class="error" *ngIf="password.errors.required">
+            Password is required <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+
+          </p>
+        </div>
+
+        <button [disabled]="!loginForm.valid" type="submit" class="u-full-width login">Login</button>
+      </form>
+    </div>
+    <div class="six columns ">
+      <h5>Don't have an account?</h5>
+      <button type="submit" routerLink="/register" class="u-full-width button-primary registerBtn">Register</button>
+    </div>
+  </div>
+
 </div>

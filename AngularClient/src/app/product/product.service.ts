@@ -23,4 +23,8 @@ export class ProductService {
     return this.api.get<Product>('products/' + id);
   }
 
+  public create(product: Product): Observable<Product> {
+    return this.api.post<Product>('products', product);
+  }
+
 }

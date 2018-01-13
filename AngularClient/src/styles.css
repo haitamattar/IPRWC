@@ -2,7 +2,7 @@
 @font-face {
     font-family: "Hind";
     font-style: normal;
-    /* font-weight: 200; */
+    font-weight: 200;
     src: url(/assets/fonts/Hind-Light.ttf) format("truetype");
 }
 
@@ -32,4 +32,16 @@
     font-style: normal;
     font-weight: 700;
     src: url(/assets/fonts/Hind-Bold.ttf) format("truetype");
+}
+
+a{
+    text-decoration: none;
+    text-decoration-color: none;
+    color: black;
+}
+
+a:hover{
+    text-decoration: none;
+    text-decoration-color: none;
+    color: black;
 }

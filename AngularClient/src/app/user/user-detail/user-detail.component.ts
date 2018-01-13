@@ -10,11 +10,10 @@ import { ShoppingCartService } from '../../shopping-cart/shopping-cart.service';
   styleUrls: ['./user-detail.component.css']
 })
 export class UserDetailComponent implements OnInit {
-  user: User;
+  user: User = new User();
 
   constructor(private userService: UserService, private authService: AuthorizationService,
     private shoppingCartService: ShoppingCartService) {
-    this.user = new User();
   }
 
   ngOnInit() {
@@ -32,10 +31,11 @@ export class UserDetailComponent implements OnInit {
       data => {
         user = data;
         this.loginWithNewData();
+        window.alert('Done');
       },
       error => {
         console.log('ERROR');
-        // this.showSnackbar('Er is een fout opgetreden bij het toevoegen', '#b10617');
+        window.alert('Error');
       }
     );
   }

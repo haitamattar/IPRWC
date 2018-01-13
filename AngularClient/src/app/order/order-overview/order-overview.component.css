@@ -1,0 +1,10 @@
+.orderForm{
+    margin-top: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+    padding: 20px;
+}
+
+#loading{
+    text-align: center;
+    padding-top: 30px;
+}

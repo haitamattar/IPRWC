@@ -1,15 +1,23 @@
 .navigation{
     width: 100%;
     height: 40px;
-    /* background-color: rgb(50, 140, 233); */
+    font-family: 'Hind';
 }
 .logo{
+    padding-top: 5px;
+    font-family: 'Hind';
     float: left;
+    color: #DE313C;
     padding-left: 20px;
     font-size: 12pt;
 }
 
+.logo h5{
+    font-weight: 600;
+}
+
 .menu{
+    padding-top: 10px;
     float: right;
     display: inline;
 }
@@ -18,13 +26,19 @@
     display: inline;
 }
 
+.categories{
+    float: left;
+}
+
 .menu li a{
+    font-family: 'Hind';
+    font-weight: 600;
     font-size: 18px;
-    color: black;
+    color: #505050;
     padding: 15px;
     text-decoration-line: none;
 }
 .menu li a:hover{
-    background-color: rgb(29, 183, 217);
     padding: 15px;
+    color: #DE313C;
 }

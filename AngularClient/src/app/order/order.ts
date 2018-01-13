@@ -1,5 +1,5 @@
-import {User} from '../user/user';
-import {OrderDetail} from './orderDetail';
+import { User } from '../user/user';
+import { OrderDetail } from './orderDetail';
 
 
 export class Order {
@@ -10,5 +10,13 @@ export class Order {
     public ordersDetail: OrderDetail[] = []
   ) {
 
+  }
+
+  public getTotalPrice(): number {
+    let price = 0;
+    for (const order of this.ordersDetail) {
+      price += order.productPrice;
+    }
+    return price;
   }
 }

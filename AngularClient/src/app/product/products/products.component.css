@@ -1,10 +1,144 @@
+.header h1{
+    margin-bottom: 0px;
+}
+
+.headProducts{
+    margin-top: 50px;
+}
+
+.allProducts{
+    padding-bottom: 40px;
+}
+
 .product{
+    border-radius: 5px;
+    font-family: 'hind';
     width: 100%;
-    height: 300px;
-    background-color: green;
+    height: 250px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
     margin-top: 20px;
+    overflow: hidden;
 }
 
 .product p{
     text-align: center;
+}
+
+.product .row{
+    height: 100%;
+}
+
+.productDescription{
+    height: 100%;
+    background-color: #292929;
+    color: white;
+    z-index: 4;
+    padding: 20px;
+}
+
+.productDescription h5{
+    color: white;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.productDescription h4{
+    padding-bottom: 10px;
+}
+
+.productDescription p{
+    margin: 0px;
+    padding: 0px;
+    display: inline-block;
+    text-align: left;
+    font-weight: 200;
+    font-size: 10pt;
+    font-family: 'Hind';
+    color: #cfcfcf;
+}
+
+.productDescription a{
+    display: block;
+}
+
+.productImage img{
+    padding-top: 20%;
+    width: 250px;
+    display:block;
+    margin:auto;
+}
+
+.btnAddToCart{
+    background-color: #DE313C;
+    color: white;
+    font-family: 'Hind';
+    border: none;
+    font-size: 9pt;
+    transition: font-size 0.5s;
+}
+
+.btnAddToCart:hover{
+    background-color: #cf2c37;
+    font-size: 9.5pt;
+}
+
+@media (max-width: 950px) {
+    .productDescription p{
+        font-size: 8pt;
+    }
+
+    .productDescription h5{
+        font-size: 10pt;
+    }
+
+    .productDescription h4{
+        font-size: 11pt;
+    }
+
+    .productDescription{
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .btnAddToCart{
+        width: 100%;
+        font-size: 6pt;
+        padding: 10px;
+        line-height: 0px;
+    }
+}
+
+@media (max-width: 549px) {
+    .btnAddToCart{
+        font-size: 8pt;
+    }
+
+    .productDescription p{
+        font-size: 10pt;
+    }
+
+    .productDescription h5{
+        font-size: 14pt;
+    }
+
+    .productDescription h4{
+        font-size: 15pt;
+    }
+
+    .product{
+        text-align: center;
+        height: 400px;
+        margin-bottom: 10px;
+    }
+
+    .productImage{
+        height: 200px;
+    }
+    .productImage img{
+        padding-top: 10px;
+    }
+    .productDescription{
+        height: 200px;
+    }
 }

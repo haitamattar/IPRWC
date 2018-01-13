@@ -27,6 +27,10 @@ export class UserService {
       return this.api.put<User>('users', user);
   }
 
+  public delete(user: User): Observable<User> {
+      return this.api.delete<User>('users/' + user.id);
+  }
+
   public login(user: User) {
     this.authService.setAuthorization(user.email, user.password);
     return this.api.get<User>('users/me');

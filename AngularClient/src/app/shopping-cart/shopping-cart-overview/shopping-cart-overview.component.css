@@ -1,3 +1,17 @@
+.registerForm{
+    margin-top: 50px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 6px 20px 0 rgba(0, 0, 0, 0.15);
+    font-family: 'Hind';
+    border-radius: 5px;
+}
+
+.purchase{
+    border: none;
+    transition: background-color 0.3s;
+}
+
 hr{
     margin-top: 0px;
     margin-bottom: 10px;
@@ -11,6 +25,8 @@ h5{
 .totalCost{
     text-align: right;
     padding-right: 20px;
+    font-weight: 600;
+    padding-bottom: 50px;
 }
 
 ol{
@@ -31,4 +47,13 @@ ol li{
     font-size: 10pt;
     color: #666666;
     display: inline;
+}
+
+.amountInput{
+    width: 60px;
+}
+
+.productDescription{
+    font-size: 8pt;
+    color: #666666;
 }

@@ -1,19 +1,43 @@
-<div class="container">
+<div class="headProducts container">
   <section class="header">
-    <h1>The best products</h1>
+    <h1 *ngIf="category != null else noCategory">{{ category }}</h1>
+    <ng-template #noCategory>
+      <h1>All products</h1>
+    </ng-template>
+
     <p>products</p>
+    <hr>
   </section>
 </div>
 
-<div class="container">
+<div *ngIf="products.length > 0 else noProducts" class="container allProducts">
   <div *ngFor="let row of products; let i = index" class="row">
-
-    <div *ngFor="let product of row"  class="four columns">
+    <div *ngFor="let product of row" class="six columns">
       <div class="product">
-        <a routerLink="/product/{{product.id}}" ><h4>{{ product.name }}</h4></a>
-        {{ product.description }}
-          <img [src]="'data:image/png;base64,'+product.image" />
+        <div class="row">
+          <div class="productImage six columns">
+            <img [src]='product.image'/>
+          </div>
+          <div class="six columns productDescription">
+            <!-- <a routerLink="/product/{{product.id}}"> -->
+                <h5>{{ product.name }}</h5>
+            <!-- </a> -->
+            <p>{{ product.description }}</p>
+            <h4>&euro; {{ product.price }}</h4>
+            <button (click)="addToShoppingCart(product)" class="btnAddToCart" type="button" name="button"> Add to cart</button>
+          </div>
+        </div>
+
+
+
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noProducts>
+  <div class="container">
+    <h4>Can't find products</h4>
+    <p *ngIf="category != null">with category {{ category }}</p>
+  </div>
+</ng-template>
