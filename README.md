@@ -1,8 +1,14 @@
 # IPRWC
+This is a school project where the goal was to build a simple webshop with a front-end and RESTful framework
+
+[Demo webshop](http://webshop.haitam.io/)
+
 Haitam el Attar, s1101419
 
-http://webshop.haitam.io/
-
+## Technologies used
++ [Angular 4](https://angular.io/)
++ [Dropwizard](https://www.dropwizard.io/)
++ [MySQL](https://www.mysql.com/)
 
 ## Accounts
 Docent acc:
