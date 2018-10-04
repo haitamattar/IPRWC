@@ -1,4 +1,4 @@
-# IPRWC
+# IPRWC!
 This is a school project where the goal was to build a simple webshop with a front-end and RESTful framework
 
 [Demo webshop](http://webshop.haitam.io/)
