@@ -11,11 +11,6 @@ Haitam el Attar, s1101419
 + [MySQL](https://www.mysql.com/)
 
 ## Accounts
-Docent acc:
-> Username: docent@live.nl
-
-> Password: geheim123
-
 Student acc:
 > Username: student@live.nl
 
